@@ -36,11 +36,47 @@ public class HomePage {
     	// Create the Top Navigation Bar
         ToolBar toolbar = new ToolBar(homeButton, forumsButton);
         // - - - - - - - - - - - - - - - NAV BAR - - - - - - - - - - - - - - 
-    	
         
         
         // - - - - - - - - - - - - - - - CONTENT - - - - - - - - - - - - - - 
     	Button questionButton = new Button("questions page");
+	    Button inviteButton = new Button("Invite");
+	    Button oneTimePasswordButton = new Button("One Time Password");
+	    Button listUsersButton = new Button("List Users");
+	    Button removeUsersButton = new Button("Remove Users");
+	    Button updateRoleButton = new Button("Update Role");
+	    Button logoutButton = new Button("Logout");
+	   
+	    // Go to the invite page
+        inviteButton.setOnAction(a -> {
+            new InvitationPage().show(databaseHelper, primaryStage);
+        });
+	    // Go to the one time password page
+        oneTimePasswordButton.setOnAction(a -> {
+            //page and feature need implementation
+        	new AdminOnetimePassword().show(databaseHelper, primaryStage);
+        	
+        });
+        // Go to the list of user page
+        listUsersButton.setOnAction(a -> {
+        	new AdminUserListPage(databaseHelper).show(primaryStage);
+        	//page and feature need implementation
+        });
+        // Go to remove users page
+        removeUsersButton.setOnAction(a -> {
+        	//page and feature need implementation
+        	new DeleteUserPage().show(databaseHelper, primaryStage);
+        });
+        // Go to update role page
+        updateRoleButton.setOnAction(a -> {
+        	//page and feature need implementation
+        	new UpdateRolesPage().show(databaseHelper, primaryStage);
+        });
+        // Logout user
+        logoutButton.setOnAction(a -> {
+        	System.out.println("logging out...");
+        	new SetupLoginSelectionPage(databaseHelper).show(primaryStage);
+        });
     	
     	questionButton.setOnAction(a -> {
             new Forums(databaseHelper).show(primaryStage, user);
@@ -57,7 +93,7 @@ public class HomePage {
 	    
 	    
         // - - - - - - - - - - - - - - - GENERAL LAYOUT FOR PAGES - - - - - - - - - - - - - - 
-        VBox centerContent = new VBox(10, new Label("Questions"), questionButton);
+        VBox centerContent = new VBox(10, new Label("Questions"), questionButton,inviteButton,oneTimePasswordButton,listUsersButton,removeUsersButton,updateRoleButton, logoutButton);
         centerContent.setStyle("-fx-padding: 20px;");
 
         BorderPane borderPane = new BorderPane();
