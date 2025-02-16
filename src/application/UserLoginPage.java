@@ -91,7 +91,7 @@ public class UserLoginPage {
             		// Only one role assigned, go directly to the user role home page
             		else {
             			if (adminRole) {
-            				new AdminHomePage(databaseHelper).show(primaryStage);
+            				new HomePage(databaseHelper).show(primaryStage, user);
             				
             			}
             			else if (studentRole) {

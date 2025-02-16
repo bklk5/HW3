@@ -1,12 +1,9 @@
 package databasePart1;
 import java.sql.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
-import application.User;
 import application.*;
 
 /**
@@ -43,7 +40,7 @@ public class DatabaseHelper {
 			connection = DriverManager.getConnection(DB_URL, USER, PASS);
 			statement = connection.createStatement(); 
 			// You can use this command to clear the database and restart from fresh.
-			//statement.execute("DROP ALL OBJECTS");
+//			statement.execute("DROP ALL OBJECTS");
 
 			createTables();  // Create the necessary tables if they don't exist
 		} catch (ClassNotFoundException e) {
@@ -536,16 +533,6 @@ public class DatabaseHelper {
 		
 	}
 	
-	
-
-		
-		
-		
-	
-	
-	
-
-
 	// Closes the database connection and statement.
 	public void closeConnection() {
 		try{ 
@@ -559,7 +546,253 @@ public class DatabaseHelper {
 			se.printStackTrace(); 
 		} 
 	}
+	
+    // - - - - - - - - - - - - - - - QUESTION METHODS - - - - - - - - - - - - - - 
+	public void createQuestion(Question question) throws SQLException{
+		String insertQuestion = "INSERT INTO Questions (title, content, author, category, resolved, upvotes) VALUES (?, ?, ?, ?, ?, ?)";
+		
+		try(PreparedStatement pstmt = connection.prepareStatement(insertQuestion)) {
+			pstmt.setString(1, question.getTitle());
+	        pstmt.setString(2, question.getContent());
+	        pstmt.setString(3, question.getAuthor());
+	        pstmt.setString(4, question.getCategory());
+	        pstmt.setBoolean(5, question.getStatus());
+	        pstmt.setInt(6, question.getUpvotes());  
 
+	        pstmt.executeUpdate();  
+	        System.out.println("Inserted question successfully!");
+		}
+	}
+	
+	
+	public Question readQuestionById(int questionId) throws SQLException {
+	    String query = "SELECT * FROM Questions WHERE id = ?";
+	    
+	    try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+	        pstmt.setInt(1, questionId);
+	        ResultSet rs = pstmt.executeQuery();
 
+	        if (rs.next()) {
+	            // Create and return a Question object with retrieved values
+	        	Question q = new Question(rs.getString("title"), rs.getString("content"), rs.getString("author"), rs.getString("category"));
+	        	q.setId(questionId);
+	            return q;
+	        }
+	    }
+	    return null; // Return null if no question is found
+	} 
+	
+	public boolean updateQuestion(int id, String title, String content, String category) throws SQLException {
+		System.out.println("Updating question with id : " + id);
+	    
+	    String query = "UPDATE Questions SET title = ?, content = ?, category = ? WHERE id = ?";
+	    
+	    try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+	        pstmt.setString(1, title);
+	        pstmt.setString(2, content);
+	        pstmt.setString(3, category);
+	        pstmt.setInt(4, id);
+	        
+	        int rowsUpdated = pstmt.executeUpdate(); // Execute update
+
+	        if (rowsUpdated > 0) {
+	            System.out.println("Question updated successfully!");
+	            return true;
+	        } else {
+	            System.out.println("No question found with ID: " + id);
+	            return false;
+	        }
+	    } catch (SQLException e) {
+	        System.err.println("SQL Error during update: " + e.getMessage());
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
+	
+	public boolean deleteQuestion(int id) {
+		System.out.println("Deleting question with id : " + id);
+		
+		String query = "DELETE FROM Questions WHERE ID = ?";
+		try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+	        pstmt.setInt(1, id);
+	        int rowsDeleted = pstmt.executeUpdate(); // Execute update
+
+	        if (rowsDeleted > 0) {
+	            System.out.println("Question deleted successfully!");
+	            return true;
+	        } else {
+	            System.out.println("No question found with ID: " + id);
+	            return false;
+	        }
+	    } catch (SQLException e) {
+	        System.err.println("SQL Error during update: " + e.getMessage());
+	        e.printStackTrace();
+	        return false;
+	    }
+		
+	}
+	
+	public List<Question> getQuestionTitles() throws SQLException {
+		String query = "SELECT * FROM Questions";
+	    List<Question> questions = new ArrayList<>();
+
+	    try (PreparedStatement pstmt = connection.prepareStatement(query);
+	         ResultSet rs = pstmt.executeQuery()) {
+
+	        if (!rs.isBeforeFirst()) {  
+	            System.out.println("No questions found in the database.");
+	            return questions; // Return an empty list instead of null
+	        }
+
+	        while (rs.next()) {
+	        	Question q = new Question(rs.getString("title"), rs.getString("content"), rs.getString("author"), rs.getString("category"));
+	        	q.setId(rs.getInt("id"));
+	            questions.add(q);
+	        }
+	    }
+
+	    return questions;
+	}
+	
+	public void printQuestions() throws SQLException {
+		String query = "SELECT * FROM Questions";
+		
+		try (PreparedStatement pstmt = connection.prepareStatement(query);
+			ResultSet rs = pstmt.executeQuery()) {
+			
+			// Checks if the result set is empty
+	        if (!rs.isBeforeFirst()) {  
+	            System.out.println("No questions found in the database.");
+	            return;
+	        }
+	        
+			while (rs.next()) {
+                System.out.println("ID: " + rs.getInt("id") + "| Title: " + rs.getString("title"));
+			}
+		}
+	}
+	
+	// - - - - - - - - - - - - - - - QUESTION METHODS END - - - - - - - - - - - - - -
+
+	// - - - - - - - - - - - - - - - ANSWER METHODS - - - - - - - - - - - - - - - - - 
+		public boolean createAnswer(Answer answer) {
+			System.out.println("Inserting answer for question with id " + answer.getQuestionId());
+			
+			String query = "INSERT INTO Answers (question_id, author, content, upvotes) VALUES (?, ?, ?, 0)";
+			
+			try(PreparedStatement pstmt = connection.prepareStatement(query)) {
+				pstmt.setInt(1, answer.getQuestionId());
+				pstmt.setString(2, answer.getAuthor());
+				pstmt.setString(3, answer.getContent());
+				
+				int rowsInserted = pstmt.executeUpdate();
+				
+		        if (rowsInserted > 0) {
+		            System.out.println("Answer inserted successfully!");
+		            return true;
+		        } else {
+		            System.out.println("Failed to insert answer.");
+		            return false;
+		        }
+			}
+			catch (SQLException e) {
+		        System.err.println("SQL Error during answer insertion: " + e.getMessage());
+		        e.printStackTrace();
+		        return false;
+			}
+		}
+		
+		public List<Answer> readAnswersByQuestionId(int questionId) throws SQLException {
+			String query = "SELECT * FROM Answers WHERE question_id = ? ORDER BY upvotes DESC";
+			List<Answer> answers = new ArrayList<>();
+			
+			try(PreparedStatement pstmt = connection.prepareStatement(query)) {
+				pstmt.setInt(1, questionId);
+				
+				ResultSet rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					Answer answer = new Answer(rs.getInt("question_id"), rs.getString("author"), rs.getString("content"));
+					
+					answer.setId(rs.getInt("id"));
+					answers.add(answer);
+				}
+				
+				return answers;
+			}
+			catch (SQLException e){
+				System.err.println("SQL Error fetching answers: " + e.getMessage());
+				e.printStackTrace();
+				return null;
+			}
+		   
+		}
+		
+		public Answer readAnswerById(int answerId) throws SQLException {
+		    String query = "SELECT * FROM Answers WHERE id = ?";
+		    
+		    try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+		        pstmt.setInt(1, answerId);
+		        ResultSet rs = pstmt.executeQuery();
+
+		        if (rs.next()) {
+		            // Create and return a Question object with retrieved values
+		        	Answer a = new Answer(rs.getInt("question_id"), rs.getString("author"), rs.getString("content"));
+		        	a.setId(answerId);
+		            return a;
+		        }
+		    }
+		    return null; // Return null if no question is found
+		} 
+		
+		public boolean updateAnswer(int id, String content) throws SQLException {
+			System.out.println("Updating answer with id : " + id);
+		    
+		    String query = "UPDATE Answers SET content = ? WHERE id = ?";
+		    
+		    try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+		        pstmt.setString(1, content);
+		        pstmt.setInt(2, id);
+		        
+		        int rowsUpdated = pstmt.executeUpdate(); // Execute update
+
+		        if (rowsUpdated > 0) {
+		            System.out.println("Answer updated successfully!");
+		            return true;
+		        } else {
+		            System.out.println("No answer found with ID: " + id);
+		            return false;
+		        }
+		    } catch (SQLException e) {
+		        System.err.println("SQL Error during update: " + e.getMessage());
+		        e.printStackTrace();
+		        return false;
+		    }
+		}
+		
+		public boolean deleteAnswer(int id) {
+			System.out.println("Deleting question with id : " + id);
+			
+			String query = "DELETE FROM Answers WHERE ID = ?";
+			try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+		        pstmt.setInt(1, id);
+		        int rowsDeleted = pstmt.executeUpdate(); // Execute update
+
+		        if (rowsDeleted > 0) {
+		            System.out.println("Answer deleted successfully!");
+		            return true;
+		        } else {
+		            System.out.println("No answer found with ID: " + id);
+		            return false;
+		        }
+		    } catch (SQLException e) {
+		        System.err.println("SQL Error during update: " + e.getMessage());
+		        e.printStackTrace();
+		        return false;
+		    }
+			
+		}
+		
+		// - - - - - - - - - - - - - - - ANSWER METHODS END - - - - - - - - - - - - - - - - - 
 
 }
