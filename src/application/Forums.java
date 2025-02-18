@@ -37,8 +37,8 @@ public class Forums {
         ToolBar toolbar = new ToolBar(homeButton, forumsButton);
     	
     	// Set up listview to show list of question titles
-    	ObservableList<String> items = FXCollections.observableArrayList();
-    	ListView<String> listView = new ListView<>(items);
+    	ObservableList<Question> items = FXCollections.observableArrayList();
+    	ListView<Question> listView = new ListView<>(items);
     	
     	QuestionsList questionList = new QuestionsList();
 
@@ -53,14 +53,25 @@ public class Forums {
             	
             	// Add question titles to listview 
             	questionList.setQuestions(databaseHelper.getQuestionTitles());
-            	
-            	for (Question q : questionList.getQuestions()) {
-            		items.add("ID: " + q.getId() + "      |      Title: " + q.getTitle());
-            	}
+                items.addAll(questionList.getQuestions()); 
+
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        
+     // Set custom cell factory to display questions in a readable way
+        listView.setCellFactory(param -> new javafx.scene.control.ListCell<Question>() {
+            @Override
+            protected void updateItem(Question q, boolean empty) {
+                super.updateItem(q, empty);
+                if (empty || q == null) {
+                    setText(null);
+                } else {
+                    setText("Title: " + q.getTitle());
+                }
+            }
+        });
 
         // Create Button to Navigate to Questions & Answers Page
         Button questionButton = new Button("Ask a question");
@@ -71,14 +82,12 @@ public class Forums {
         // Handle button for listview upon clicking
         listView.setOnMouseClicked(a -> {
         	if (a.getClickCount() >= 2) {
-                String selectedItem = listView.getSelectionModel().getSelectedItem();
-                int id = Integer.parseInt(selectedItem.split(" ")[1]);
+                Question selectedItem = listView.getSelectionModel().getSelectedItem();
                 
                 if(selectedItem != null) {
                 	try {
                 		// take person to page of question
-						Question q = databaseHelper.readQuestionById(id);
-						new IndividualQuestionPage(databaseHelper).show(primaryStage, user, q);
+						new IndividualQuestionPage(databaseHelper).show(primaryStage, user, selectedItem);
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
