@@ -26,6 +26,7 @@ public class Forums {
     }
 
     public void show(Stage primaryStage, User user) {  
+    	// - - - - - - - - - - - - - - - NAV BAR - - - - - - - - - - - - - - 
     	// Set up buttons for top nav bar 
     	Button homeButton = new Button("Home");
     	Button forumsButton = new Button("Forums");
@@ -35,7 +36,11 @@ public class Forums {
     	
     	// Create the Top Navigation Bar
         ToolBar toolbar = new ToolBar(homeButton, forumsButton);
+        // - - - - - - - - - - - - - - - NAV BAR - - - - - - - - - - - - - - 
     	
+        
+        
+        // - - - - - - - - - - - - - - - CONTENT - - - - - - - - - - - - - - 
     	// Set up listview to show list of question titles
     	ObservableList<Question> items = FXCollections.observableArrayList();
     	ListView<Question> listView = new ListView<>(items);
@@ -94,9 +99,12 @@ public class Forums {
                 }
         	}
         });
-        
+	    // - - - - - - - - - - - - - - - CONTENT END  - - - - - - - - - - - - - - 
 
         
+        
+
+        // - - - - - - - - - - - - - - - GENERAL LAYOUT FOR PAGES - - - - - - - - - - - - - - 
         VBox centerContent = new VBox(10, new Label("Questions"), questionButton, listView);
         centerContent.setStyle("-fx-padding: 20px;");
 
@@ -109,5 +117,7 @@ public class Forums {
         primaryStage.setTitle("Forums");
         primaryStage.setScene(scene);
         primaryStage.show();
+        // - - - - - - - - - - - - - - - GENERAL LAYOUT FOR PAGES - - - - - - - - - - - - - - 
+
     }
 }

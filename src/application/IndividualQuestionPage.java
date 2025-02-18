@@ -27,19 +27,6 @@ public class IndividualQuestionPage {
     }
 
     public void show(Stage primaryStage, User user, Question question) throws SQLException {
-    	try {
-            databaseHelper.connectToDatabase(); // Connect to the database
-            if (databaseHelper.isDatabaseEmpty()) {
-            	new FirstPage(databaseHelper).show(primaryStage);
-            } else {
-            	databaseHelper.printQuestions();
-            }
-        } catch (SQLException e) {
-        	System.out.println(e.getMessage());
-        }
-    	
-    	System.out.println(question.getId());
-    	
     	// - - - - - - - - - - - - - - - NAV BAR - - - - - - - - - - - - - - 
     	// Set up buttons for top nav bar 
     	Button homeButton = new Button("Home");
@@ -52,7 +39,7 @@ public class IndividualQuestionPage {
         ToolBar toolbar = new ToolBar(homeButton, forumsButton);
         // - - - - - - - - - - - - - - - NAV BAR - - - - - - - - - - - - - - 
         
-        // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
         
         // - - - - - - - - - - - - - - - CONTENT - - - - - - - - - - - - - - 
         Button updateButton = new Button("Update Question");
@@ -75,28 +62,55 @@ public class IndividualQuestionPage {
 			new CreateAnswer(databaseHelper).show(primaryStage, user, question);
 		});
 		
-		ObservableList<String> items = FXCollections.observableArrayList();
-    	ListView<String> listView = new ListView<>(items);
+		ObservableList<Answer> items = FXCollections.observableArrayList();
+    	ListView<Answer> listView = new ListView<>(items);
     	
     	AnswersList aList = new AnswersList();
-    	aList.setAnswers(databaseHelper.readAnswersByQuestionId(question.getId()));
     	
-    	for (Answer a : aList.getAnswers()) {
-    		items.add("ID: " + a.getId() + "    |    " + a.getAuthor() + " said : " + a.getContent());
-    	}
+        try {
+            databaseHelper.connectToDatabase(); // Connect to the database
+
+            if (databaseHelper.isDatabaseEmpty()) {
+                new FirstPage(databaseHelper).show(primaryStage);
+                return; // Exit early if database is empty
+            } else {
+            	
+            	// Add answer titles to listview 
+            	aList.setAnswers(databaseHelper.readAnswersByQuestionId(question.getId()));
+                items.addAll(aList.getAnswers()); 
+
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    	
+//    	System.out.println(question.getId());
+//    	aList.setAnswers(databaseHelper.readAnswersByQuestionId(question.getId()));
+//    	items.addAll(aList.getAnswers());
+        
+        // Set custom cell factory to display questions in a readable way
+        listView.setCellFactory(param -> new javafx.scene.control.ListCell<Answer>() {
+            @Override
+            protected void updateItem(Answer a, boolean empty) {
+                super.updateItem(a, empty);
+                if (empty || a == null) {
+                    setText(null);
+                } else {
+                    setText("Answer: " + a.getContent());
+                }
+            }
+        });
+
     	
     	// Handle button for listview upon clicking on individual list element 
         listView.setOnMouseClicked(a -> {
         	if (a.getClickCount() >= 2) {
-                String selectedItem = listView.getSelectionModel().getSelectedItem();
-                int id = Integer.parseInt(selectedItem.split(" ")[1]);
-                System.out.println("ANSWER ID IS " + id);
+                Answer selectedItem = listView.getSelectionModel().getSelectedItem();
                 
                 if(selectedItem != null) {
                 	try {
                 		// take person to page of question
-						Answer answer = databaseHelper.readAnswerById(id);
-						new IndividualAnswerPage(databaseHelper).show(primaryStage, user, question, answer);
+						new IndividualAnswerPage(databaseHelper).show(primaryStage, user, question, selectedItem);
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
@@ -105,9 +119,9 @@ public class IndividualQuestionPage {
         });
 		// - - - - - - - - - - - - - - - CONTENT - - - - - - - - - - - - - - 
         
-        // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+       
 
-        
+        // - - - - - - - - - - - - - - - GENERAL LAYOUT FOR PAGES - - - - - - - - - - - - - - 
         VBox centerContent = new VBox(10, updateButton, deleteButton, authorText, questionText, contentText, answerButton, listView);
         centerContent.setStyle("-fx-padding: 20px;");
 
@@ -120,5 +134,7 @@ public class IndividualQuestionPage {
         primaryStage.setTitle("Forums");
         primaryStage.setScene(scene);
         primaryStage.show();
+        // - - - - - - - - - - - - - - - GENERAL LAYOUT FOR PAGES - - - - - - - - - - - - - - 
+
     }
 }
