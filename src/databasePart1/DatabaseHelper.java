@@ -101,6 +101,20 @@ public class DatabaseHelper {
 	    		+ "upvotes INT DEFAULT 0, "
 	    		+ "FOREIGN KEY (question_id) REFERENCES Questions(id) ON DELETE CASCADE);";
 	    statement.execute(answersTable); 
+	    
+	    // table for messages
+	    String messagesTable = "CREATE TABLE IF NOT EXISTS Messages ("
+	    	    + "id INT AUTO_INCREMENT PRIMARY KEY, "
+	    	    + "question_id INT NOT NULL, "
+	    	    + "sender VARCHAR(255) NOT NULL, "
+	    	    + "receiver VARCHAR(255) NOT NULL, " 
+	    	    + "content TEXT NOT NULL, " 
+	    	    + "timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
+	    	    + "FOREIGN KEY (sender) REFERENCES cse360users(userName) ON DELETE CASCADE, " 
+	    	    + "FOREIGN KEY (receiver) REFERENCES cse360users(userName) ON DELETE CASCADE, "
+	    	    + "FOREIGN KEY (question_id) REFERENCES Questions(id) ON DELETE CASCADE)";
+	    statement.execute(messagesTable); 
+
 	}
 
 
@@ -793,6 +807,86 @@ public class DatabaseHelper {
 			
 		}
 		
-		// - - - - - - - - - - - - - - - ANSWER METHODS END - - - - - - - - - - - - - - - - - 
+		// - - - - - - - - - - - - - - - ANSWER METHODS END - - - - - - - - - - - - - - - - -
+		
+		// - - - - - - - - - - - - - - - MESSAGE METHODS - - - - - - - - - - - - - - - - -
+		
+		public void sendMessage(Message message) {
+			String query = "INSERT INTO Messages (question_id, sender, receiver, content) VALUES (?, ?, ?, ?)";
+			
+			try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+		        pstmt.setInt(1, message.getQuestionId());
+		        pstmt.setString(2, message.getSender());
+		        pstmt.setString(3, message.getReceiver());
+		        pstmt.setString(4, message.getContent());
+		        
+		        int rowsSent = pstmt.executeUpdate(); // Execute update
+
+		        if (rowsSent > 0) {
+		            System.out.println("Message sent successfully!");
+		        } else {
+		            System.out.println("Message failed to send!");
+		        }
+		    } catch (SQLException e) {
+		        System.err.println("SQL Error during update: " + e.getMessage());
+		        e.printStackTrace();
+		    }
+		}
+		
+		public List<Message> getMessages(User user) {
+			String query = "SELECT * FROM Messages WHERE receiver = ? ORDER BY timestamp DESC";
+			List<Message> mList = new ArrayList<>();
+			
+			try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+		        pstmt.setString(1, user.getUserName());
+				
+		        ResultSet rs = pstmt.executeQuery();
+		        while (rs.next()) {
+		        	mList.add(new Message(rs.getInt("id"), 
+		        			rs.getInt("question_id"),
+		        			rs.getString("sender"), 
+		        			rs.getString("receiver"), 
+		        			rs.getString("content"), 
+		        			rs.getTimestamp("timestamp")));
+		        }
+		        
+		    } catch (SQLException e) {
+		        System.err.println("SQL Error during update: " + e.getMessage());
+		        e.printStackTrace();
+		    }
+			
+			return mList;
+		}
+		
+		
+		
+		public List<Message> getConversation(String user1, String user2) {
+			String query = "SELECT * FROM Messages WHERE (sender = ? AND receiver = ?) OR (sender = ? AND receiver = ?) ORDER BY timestamp";
+			List<Message> mList = new ArrayList<>();
+			
+			try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+				pstmt.setString(1, user1);
+				pstmt.setString(2, user2);
+				pstmt.setString(3, user2);
+				pstmt.setString(4, user1);
+		        
+		        ResultSet rs = pstmt.executeQuery();
+		        while (rs.next()) {
+		        	mList.add(new Message(rs.getInt("id"), 
+		        			rs.getInt("question_id"),
+		        			rs.getString("sender"), 
+		        			rs.getString("receiver"), 
+		        			rs.getString("content"), 
+		        			rs.getTimestamp("timestamp")));
+		        }
+		        
+		    } catch (SQLException e) {
+		        System.err.println("SQL Error during update: " + e.getMessage());
+		        e.printStackTrace();
+		    }
+			
+			return mList;
+		}
+
 
 }

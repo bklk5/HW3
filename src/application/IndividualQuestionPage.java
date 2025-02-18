@@ -47,6 +47,7 @@ public class IndividualQuestionPage {
         Label questionText = new Label(question.getTitle());
 		Label authorText = new Label(question.getAuthor());
 		Label contentText = new Label(question.getContent());
+		Button messageButton = new Button("Send Message");
 		Button answerButton = new Button("Answer Question");
 		
 		updateButton.setOnAction(a -> {
@@ -56,6 +57,11 @@ public class IndividualQuestionPage {
 		deleteButton.setOnAction(a -> {
 			databaseHelper.deleteQuestion(question.getId());
 			new Forums(databaseHelper).show(primaryStage, user);
+		});
+		
+		messageButton.setOnAction(a -> {
+			System.out.println("sending message to " + question.getAuthor());
+			new CreateMessage(databaseHelper).show(primaryStage, user, question);
 		});
 		
 		answerButton.setOnAction(a -> {
@@ -122,7 +128,7 @@ public class IndividualQuestionPage {
        
 
         // - - - - - - - - - - - - - - - GENERAL LAYOUT FOR PAGES - - - - - - - - - - - - - - 
-        VBox centerContent = new VBox(10, updateButton, deleteButton, authorText, questionText, contentText, answerButton, listView);
+        VBox centerContent = new VBox(10, updateButton, deleteButton, authorText, questionText, contentText, messageButton, answerButton, listView);
         centerContent.setStyle("-fx-padding: 20px;");
 
         BorderPane borderPane = new BorderPane();
