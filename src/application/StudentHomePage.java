@@ -26,11 +26,12 @@ public class StudentHomePage {
 		    // label to display the welcome message for the admin
 		    Label studentLabel = new Label("Hello, Student!");
 		    Button createQuestionButton = new Button ("Create Question");
+		    Button homePageButton = new Button("Go to Forums");
 		    Button logoutButton = new Button("Logout");
 		    
 		    studentLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
 
-		    layout.getChildren().addAll(studentLabel,createQuestionButton,logoutButton);
+		    layout.getChildren().addAll(studentLabel,createQuestionButton,homePageButton,logoutButton);
 		    Scene studentScene = new Scene(layout, 800, 400);
 
 		 // Logout user
@@ -42,6 +43,11 @@ public class StudentHomePage {
 	        // Navigate to create question page
 	        createQuestionButton.setOnAction(a -> {
 	        	new CreateQuestion(databaseHelper).show(primaryStage, user);
+	        });
+	        
+	        // Navigate to homepage
+	        homePageButton.setOnAction(a -> {
+	        	new Forums(databaseHelper).show(primaryStage, user);
 	        });
 		    
 		    

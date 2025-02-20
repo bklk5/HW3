@@ -29,20 +29,23 @@ public class HomePage {
     	// Set up buttons for top nav bar 
     	Button homeButton = new Button("Home");
     	Button forumsButton = new Button("Forums");
+    	Button reviewersListButton = new Button("Trusted Reviewers List");
     	Button messagesButton = new Button("Messages");
     	
     	homeButton.setOnAction(a -> new HomePage(databaseHelper).show(primaryStage, user));
     	forumsButton.setOnAction(a -> new Forums(databaseHelper).show(primaryStage, user));
+    	// set on action with reviewersListButton
     	messagesButton.setOnAction(a -> new MessagesPage(databaseHelper).show(primaryStage,user));
     	
     	// Create the Top Navigation Bar
-        ToolBar toolbar = new ToolBar(homeButton, forumsButton, messagesButton);
+        ToolBar toolbar = new ToolBar(homeButton, forumsButton, reviewersListButton,messagesButton);
         // - - - - - - - - - - - - - - - NAV BAR - - - - - - - - - - - - - - 
         
         
         // - - - - - - - - - - - - - - - CONTENT - - - - - - - - - - - - - - 
         Label welcomeText = new Label("Welcome " + user.getUserName() + "!");
     	Button questionButton = new Button("questions page");
+    	Button reviewersButton = new Button("Reviewers Page");
 	    Button inviteButton = new Button("Invite");
 	    Button oneTimePasswordButton = new Button("One Time Password");
 	    Button listUsersButton = new Button("List Users");
@@ -87,6 +90,9 @@ public class HomePage {
     	questionButton.setOnAction(a -> {
             new Forums(databaseHelper).show(primaryStage, user);
     	});
+    	
+    	// set on action with reviewersButton
+    	
     	VBox layout = new VBox();
     	
 	    layout.setStyle("-fx-alignment: center; -fx-padding: 20;");
@@ -99,7 +105,7 @@ public class HomePage {
 	    
 	    
         // - - - - - - - - - - - - - - - GENERAL LAYOUT FOR PAGES - - - - - - - - - - - - - - 
-        VBox centerContent = new VBox(10, welcomeText, questionButton,inviteButton,oneTimePasswordButton,listUsersButton,removeUsersButton,updateRoleButton, logoutButton);
+        VBox centerContent = new VBox(10, welcomeText, questionButton,reviewersButton,inviteButton,oneTimePasswordButton,listUsersButton,removeUsersButton,updateRoleButton, logoutButton);
         centerContent.setStyle("-fx-padding: 20px;");
 
         BorderPane borderPane = new BorderPane();
