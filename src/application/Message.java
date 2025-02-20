@@ -11,9 +11,8 @@ public class Message {
 	private String content;
 	
 	// CREATE METHOD (constructor)
-	public Message(int id, int questionId, String sender, String receiver, String content, Timestamp timestamp) {
+	public Message(int id, String sender, String receiver, String content, Timestamp timestamp) {
 		this.id = id;
-		this.questionId = questionId;
 		this.sender = sender;
 		this.receiver = receiver;
 		this.content = content;
@@ -22,6 +21,12 @@ public class Message {
 	
 	public Message(int questionId, String sender, String receiver, String content) {
 		this.questionId = questionId;
+		this.sender = sender;
+		this.receiver = receiver;
+		this.content = content;
+	}
+	
+	public Message(String sender, String receiver, String content) {
 		this.sender = sender;
 		this.receiver = receiver;
 		this.content = content;

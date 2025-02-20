@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -18,14 +19,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.Node;
 
 
-public class MessagesPage {
+public class ConversationPage {
 	private final DatabaseHelper databaseHelper;
 
-    public MessagesPage(DatabaseHelper databaseHelper) {
+    public ConversationPage(DatabaseHelper databaseHelper) {
         this.databaseHelper = databaseHelper;
     }
 
-    public void show(Stage primaryStage, User user) {  
+    public void show(Stage primaryStage, User user, User otherUser) {  
     	// - - - - - - - - - - - - - - - NAV BAR - - - - - - - - - - - - - - 
     	// Set up buttons for top nav bar 
     	Button homeButton = new Button("Home");
@@ -43,8 +44,22 @@ public class MessagesPage {
         
         
         // - - - - - - - - - - - - - - - CONTENT - - - - - - - - - - - - - - 
-        Label header = new Label("Your Feedback and Messages: ");
+        Label header = new Label("Messaging : " + otherUser.getUserName());
 	    header.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
+	    
+	    TextField messageBox = new TextField();
+	    messageBox.setPromptText("Type message here");
+	    messageBox.setPrefHeight(50);
+	    messageBox.setPrefWidth(600);
+	    
+	    Button sendButton = new Button("Send >");
+	    
+	    sendButton.setOnAction(a -> {
+	    	String content = messageBox.getText();
+	    	Message message = new Message(user.getUserName(), otherUser.getUserName(), content);
+	    	databaseHelper.sendMessage(message);
+	    	new ConversationPage(databaseHelper).show(primaryStage, user, otherUser);
+	    });
 
     	// Set up listview to show list of question titles
     	ObservableList<Message> items = FXCollections.observableArrayList();
@@ -53,8 +68,9 @@ public class MessagesPage {
     	List<Message> mList = new ArrayList<>();
 
         
+    	// connect to database and get conversation between users
         try {
-            databaseHelper.connectToDatabase(); // Connect to the database
+            databaseHelper.connectToDatabase(); 
 
             if (databaseHelper.isDatabaseEmpty()) {
                 new FirstPage(databaseHelper).show(primaryStage);
@@ -62,7 +78,7 @@ public class MessagesPage {
             } else {
             	
             	// Add question titles to listview 
-            	mList = databaseHelper.getMessages(user);
+            	mList = databaseHelper.getConversation(user.getUserName(), otherUser.getUserName());
                 items.addAll(mList); 
 
             }
@@ -70,7 +86,7 @@ public class MessagesPage {
             System.out.println(e.getMessage());
         }
         
-     // Set custom cell factory to display questions in a readable way
+        // Set custom cell factory to display questions in a readable way
         listView.setCellFactory(param -> new javafx.scene.control.ListCell<Message>() {
             @Override
             protected void updateItem(Message m, boolean empty) {
@@ -78,7 +94,7 @@ public class MessagesPage {
                 if (empty || m == null) {
                     setText(null);
                 } else {
-                    setText(m.getSender() + " said : " + m.getContent());
+                    setText(m.getSender() + " : " + m.getContent());
                     setStyle("-fx-padding:10px 20px;");
                 }
             }
@@ -92,19 +108,23 @@ public class MessagesPage {
                 if(selectedItem != null) {
                 	// take person to page of question
 					System.out.println(selectedItem.getContent());
-					User sender = databaseHelper.getUser(selectedItem.getSender());
-					new ConversationPage(databaseHelper).show(primaryStage, user, sender);
                 }
         	}
         });
+        
+        listView.scrollTo(items.size() - 1);
 	    // - - - - - - - - - - - - - - - CONTENT END  - - - - - - - - - - - - - - 
 
         
         
 
         // - - - - - - - - - - - - - - - GENERAL LAYOUT FOR PAGES - - - - - - - - - - - - - - 
-        VBox centerContent = new VBox(10, header, listView);
+        HBox sendMessageContainer = new HBox(50, messageBox, sendButton);
+        
+        VBox centerContent = new VBox(10, header, listView, sendMessageContainer);
         centerContent.setStyle("-fx-padding: 20px;");
+        
+
 
         BorderPane borderPane = new BorderPane();
         borderPane.setTop(toolbar);      // Add navigation bar

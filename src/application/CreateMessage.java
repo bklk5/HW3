@@ -42,7 +42,7 @@ public class CreateMessage {
                 	new FirstPage(databaseHelper).show(primaryStage);
                 } else {
                 	// create message and insert into database
-                	Message m = new Message(question.getId(), sender, receiver, content);
+                	Message m = new Message(sender, receiver, content);
                     databaseHelper.sendMessage(m);
                     new Forums(databaseHelper).show(primaryStage, user);
                 }

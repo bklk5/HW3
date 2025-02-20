@@ -111,14 +111,12 @@ public class DatabaseHelper {
 	    // table for messages
 	    String messagesTable = "CREATE TABLE IF NOT EXISTS Messages ("
 	    	    + "id INT AUTO_INCREMENT PRIMARY KEY, "
-	    	    + "question_id INT NOT NULL, "
 	    	    + "sender VARCHAR(255) NOT NULL, "
 	    	    + "receiver VARCHAR(255) NOT NULL, " 
 	    	    + "content TEXT NOT NULL, " 
 	    	    + "timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
 	    	    + "FOREIGN KEY (sender) REFERENCES cse360users(userName) ON DELETE CASCADE, " 
-	    	    + "FOREIGN KEY (receiver) REFERENCES cse360users(userName) ON DELETE CASCADE, "
-	    	    + "FOREIGN KEY (question_id) REFERENCES Questions(id) ON DELETE CASCADE)";
+	    	    + "FOREIGN KEY (receiver) REFERENCES cse360users(userName) ON DELETE CASCADE)";
 	    statement.execute(messagesTable); 
 
 	}
@@ -553,6 +551,33 @@ public class DatabaseHelper {
 		
 	}
 	
+	public User getUser(String username) {
+		String query = "SELECT * FROM cse360users WHERE userName = ?";
+		
+		try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+	        pstmt.setString(1, username);
+	        ResultSet rs = pstmt.executeQuery();
+	        
+	        if (rs.next()) {
+	            User user = new User(rs.getString("name"), 
+	            		rs.getString("email"), 
+	            		rs.getString("userName"),
+	            		rs.getString("password"),
+	            		rs.getBoolean("adminRole"),
+	            		rs.getBoolean("studentRole"),
+	            		rs.getBoolean("instructorRole"),
+	            		rs.getBoolean("staffRole"),
+	            		rs.getBoolean("reviewerRole"));
+	            System.out.println("User found!");
+	            return user;
+	        }
+	    } catch (SQLException e) {
+	        System.err.println("SQL Error during update: " + e.getMessage());
+	        e.printStackTrace();
+	    }
+		return null;
+	}
+	
 	// Closes the database connection and statement.
 	public void closeConnection() {
 		try{ 
@@ -818,13 +843,12 @@ public class DatabaseHelper {
 		// - - - - - - - - - - - - - - - MESSAGE METHODS - - - - - - - - - - - - - - - - -
 		
 		public void sendMessage(Message message) {
-			String query = "INSERT INTO Messages (question_id, sender, receiver, content) VALUES (?, ?, ?, ?)";
+			String query = "INSERT INTO Messages (sender, receiver, content) VALUES (?, ?, ?)";
 			
 			try (PreparedStatement pstmt = connection.prepareStatement(query)) {
-		        pstmt.setInt(1, message.getQuestionId());
-		        pstmt.setString(2, message.getSender());
-		        pstmt.setString(3, message.getReceiver());
-		        pstmt.setString(4, message.getContent());
+		        pstmt.setString(1, message.getSender());
+		        pstmt.setString(2, message.getReceiver());
+		        pstmt.setString(3, message.getContent());
 		        
 		        int rowsSent = pstmt.executeUpdate(); // Execute update
 
@@ -849,7 +873,6 @@ public class DatabaseHelper {
 		        ResultSet rs = pstmt.executeQuery();
 		        while (rs.next()) {
 		        	mList.add(new Message(rs.getInt("id"), 
-		        			rs.getInt("question_id"),
 		        			rs.getString("sender"), 
 		        			rs.getString("receiver"), 
 		        			rs.getString("content"), 
@@ -879,7 +902,6 @@ public class DatabaseHelper {
 		        ResultSet rs = pstmt.executeQuery();
 		        while (rs.next()) {
 		        	mList.add(new Message(rs.getInt("id"), 
-		        			rs.getInt("question_id"),
 		        			rs.getString("sender"), 
 		        			rs.getString("receiver"), 
 		        			rs.getString("content"), 
@@ -893,6 +915,8 @@ public class DatabaseHelper {
 			
 			return mList;
 		}
+		
+		// - - - - - - - - - - - - - - - MESSAGE METHODS END - - - - - - - - - - - - - - - - -
 
 
 }
