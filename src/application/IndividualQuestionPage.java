@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -47,6 +48,7 @@ public class IndividualQuestionPage {
         Label questionText = new Label(question.getTitle());
 		Label authorText = new Label(question.getAuthor());
 		Label contentText = new Label(question.getContent());
+		Button messageButton = new Button("Send Message");
 		Button answerButton = new Button("Answer Question");
 		
 		updateButton.setOnAction(a -> {
@@ -56,6 +58,11 @@ public class IndividualQuestionPage {
 		deleteButton.setOnAction(a -> {
 			databaseHelper.deleteQuestion(question.getId());
 			new Forums(databaseHelper).show(primaryStage, user);
+		});
+		
+		messageButton.setOnAction(a -> {
+			System.out.println("sending message to " + question.getAuthor());
+			new CreateMessage(databaseHelper).show(primaryStage, user, question);
 		});
 		
 		answerButton.setOnAction(a -> {
@@ -122,7 +129,14 @@ public class IndividualQuestionPage {
        
 
         // - - - - - - - - - - - - - - - GENERAL LAYOUT FOR PAGES - - - - - - - - - - - - - - 
-        VBox centerContent = new VBox(10, updateButton, deleteButton, authorText, questionText, contentText, answerButton, listView);
+        HBox buttonContainer = new HBox();
+        buttonContainer.setAlignment(javafx.geometry.Pos.TOP_RIGHT);
+        
+        if (user.getUserName().equals(question.getAuthor())) {
+        	buttonContainer.getChildren().addAll(updateButton, deleteButton);
+        }
+        
+        VBox centerContent = new VBox(10, buttonContainer, authorText, questionText, contentText, answerButton, messageButton, listView);
         centerContent.setStyle("-fx-padding: 20px;");
 
         BorderPane borderPane = new BorderPane();
