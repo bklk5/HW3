@@ -111,6 +111,8 @@ public class ConversationPage {
                 }
         	}
         });
+        
+        listView.scrollTo(items.size() - 1);
 	    // - - - - - - - - - - - - - - - CONTENT END  - - - - - - - - - - - - - - 
 
         
