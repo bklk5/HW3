@@ -18,10 +18,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.Node;
 
 
-public class Forums {
+public class MessagesPage {
 	private final DatabaseHelper databaseHelper;
 
-    public Forums(DatabaseHelper databaseHelper) {
+    public MessagesPage(DatabaseHelper databaseHelper) {
         this.databaseHelper = databaseHelper;
     }
 
@@ -43,11 +43,14 @@ public class Forums {
         
         
         // - - - - - - - - - - - - - - - CONTENT - - - - - - - - - - - - - - 
+        Label header = new Label("Your Feedback and Messages: ");
+	    header.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
+
     	// Set up listview to show list of question titles
-    	ObservableList<Question> items = FXCollections.observableArrayList();
-    	ListView<Question> listView = new ListView<>(items);
+    	ObservableList<Message> items = FXCollections.observableArrayList();
+    	ListView<Message> listView = new ListView<>(items);
     	
-    	QuestionsList questionList = new QuestionsList();
+    	List<Message> mList = new ArrayList<>();
 
         
         try {
@@ -59,8 +62,8 @@ public class Forums {
             } else {
             	
             	// Add question titles to listview 
-            	questionList.setQuestions(databaseHelper.getQuestionTitles());
-                items.addAll(questionList.getQuestions()); 
+            	mList = databaseHelper.getMessages(user);
+                items.addAll(mList); 
 
             }
         } catch (SQLException e) {
@@ -68,36 +71,26 @@ public class Forums {
         }
         
      // Set custom cell factory to display questions in a readable way
-        listView.setCellFactory(param -> new javafx.scene.control.ListCell<Question>() {
+        listView.setCellFactory(param -> new javafx.scene.control.ListCell<Message>() {
             @Override
-            protected void updateItem(Question q, boolean empty) {
-                super.updateItem(q, empty);
-                if (empty || q == null) {
+            protected void updateItem(Message m, boolean empty) {
+                super.updateItem(m, empty);
+                if (empty || m == null) {
                     setText(null);
                 } else {
-                    setText("Title: " + q.getTitle());
+                    setText(m.getSender() + " said : " + m.getContent());
                 }
             }
-        });
-
-        // Create Button to Navigate to Questions & Answers Page
-        Button questionButton = new Button("Ask a question");
-        questionButton.setOnAction(a -> {
-        	new CreateQuestion(databaseHelper).show(primaryStage, user);
         });
         
         // Handle button for listview upon clicking
         listView.setOnMouseClicked(a -> {
         	if (a.getClickCount() >= 2) {
-                Question selectedItem = listView.getSelectionModel().getSelectedItem();
+                Message selectedItem = listView.getSelectionModel().getSelectedItem();
                 
                 if(selectedItem != null) {
-                	try {
-                		// take person to page of question
-						new IndividualQuestionPage(databaseHelper).show(primaryStage, user, selectedItem);
-					} catch (SQLException e) {
-						e.printStackTrace();
-					}
+                	// take person to page of question
+					System.out.println(selectedItem.getContent());
                 }
         	}
         });
@@ -107,7 +100,7 @@ public class Forums {
         
 
         // - - - - - - - - - - - - - - - GENERAL LAYOUT FOR PAGES - - - - - - - - - - - - - - 
-        VBox centerContent = new VBox(10, new Label("Questions"), questionButton, listView);
+        VBox centerContent = new VBox(10, header, listView);
         centerContent.setStyle("-fx-padding: 20px;");
 
         BorderPane borderPane = new BorderPane();

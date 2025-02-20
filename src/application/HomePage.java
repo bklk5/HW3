@@ -29,12 +29,14 @@ public class HomePage {
     	// Set up buttons for top nav bar 
     	Button homeButton = new Button("Home");
     	Button forumsButton = new Button("Forums");
+    	Button messagesButton = new Button("Messages");
     	
     	homeButton.setOnAction(a -> new HomePage(databaseHelper).show(primaryStage, user));
     	forumsButton.setOnAction(a -> new Forums(databaseHelper).show(primaryStage, user));
+    	messagesButton.setOnAction(a -> new MessagesPage(databaseHelper).show(primaryStage,user));
     	
     	// Create the Top Navigation Bar
-        ToolBar toolbar = new ToolBar(homeButton, forumsButton);
+        ToolBar toolbar = new ToolBar(homeButton, forumsButton, messagesButton);
         // - - - - - - - - - - - - - - - NAV BAR - - - - - - - - - - - - - - 
         
         
