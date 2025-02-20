@@ -56,7 +56,7 @@ public class IndividualAnswerPage {
         System.out.println("Content: " + answer.getContent());
         System.out.println("Author: " + answer.getAuthor());
         
-        Label header = new Label(user.getUserName() + "'s Post");
+        Label header = new Label(answer.getAuthor() + "'s Post");
         Button updateButton = new Button("Update answer");
         Button deleteButton = new Button("Delete answer");
 		Label contentText = new Label(answer.getContent());
