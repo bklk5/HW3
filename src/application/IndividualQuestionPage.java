@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -122,7 +123,13 @@ public class IndividualQuestionPage {
        
 
         // - - - - - - - - - - - - - - - GENERAL LAYOUT FOR PAGES - - - - - - - - - - - - - - 
-        VBox centerContent = new VBox(10, updateButton, deleteButton, authorText, questionText, contentText, answerButton, listView);
+        HBox buttonContainer = new HBox();
+        
+        if (user.getUserName().equals(question.getAuthor())) {
+        	buttonContainer.getChildren().addAll(updateButton, deleteButton);
+        }
+        
+        VBox centerContent = new VBox(10, buttonContainer, authorText, questionText, contentText, answerButton, listView);
         centerContent.setStyle("-fx-padding: 20px;");
 
         BorderPane borderPane = new BorderPane();
