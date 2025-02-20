@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -76,22 +77,16 @@ public class IndividualAnswerPage {
 			}
 		});
 		
-		
-//		ObservableList<String> items = FXCollections.observableArrayList();
-//    	ListView<String> listView = new ListView<>(items);
-//    	
-//    	AnswersList aList = new AnswersList();
-//    	aList.setAnswers(databaseHelper.readAnswersByQuestionId(question.getId()));
-//    	
-//    	for (Answer a : aList.getAnswers()) {
-//    		items.add(a.getAuthor() + " said : " + a.getContent());
-//    	}
 		// - - - - - - - - - - - - - - - CONTENT - - - - - - - - - - - - - - 
         
         // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
+		HBox buttonContainer = new HBox();
         
-        VBox centerContent = new VBox(10, header, updateButton, deleteButton, contentText);
+        if (user.getUserName().equals(answer.getAuthor())) {
+        	buttonContainer.getChildren().addAll(updateButton, deleteButton);
+        }
+        
+        VBox centerContent = new VBox(10, header, buttonContainer, contentText);
         centerContent.setStyle("-fx-padding: 20px;");
 
         BorderPane borderPane = new BorderPane();
