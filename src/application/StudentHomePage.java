@@ -18,24 +18,30 @@ public class StudentHomePage {
 	
 	
 	
-	 public void show(Stage primaryStage) {
+	 public void show(Stage primaryStage, User user) {
 	    	VBox layout = new VBox();
 	    	
 		    layout.setStyle("-fx-alignment: center; -fx-padding: 20;");
 		    
 		    // label to display the welcome message for the admin
 		    Label studentLabel = new Label("Hello, Student!");
+		    Button createQuestionButton = new Button ("Create Question");
 		    Button logoutButton = new Button("Logout");
 		    
 		    studentLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
 
-		    layout.getChildren().addAll(studentLabel,logoutButton);
+		    layout.getChildren().addAll(studentLabel,createQuestionButton,logoutButton);
 		    Scene studentScene = new Scene(layout, 800, 400);
 
 		 // Logout user
 	        logoutButton.setOnAction(a -> {
 	        	System.out.println("logging out...");
 	        	new SetupLoginSelectionPage(databaseHelper).show(primaryStage);
+	        });
+	        
+	        // Navigate to create question page
+	        createQuestionButton.setOnAction(a -> {
+	        	new CreateQuestion(databaseHelper).show(primaryStage, user);
 	        });
 		    
 		    

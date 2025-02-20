@@ -101,6 +101,12 @@ public class DatabaseHelper {
 	    		+ "upvotes INT DEFAULT 0, "
 	    		+ "FOREIGN KEY (question_id) REFERENCES Questions(id) ON DELETE CASCADE);";
 	    statement.execute(answersTable); 
+	    
+	    // Table for trusted reviewers
+	    String reviewersTable = "CREATE TABLE IF NOT EXISTS Reviewers ("
+	    		+ "name VARCHAR(100) NOT NULL, "
+	    		+ "weight INT NOT NULL)";
+	    statement.execute(reviewersTable);
 	}
 
 

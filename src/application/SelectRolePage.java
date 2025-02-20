@@ -44,7 +44,7 @@ public class SelectRolePage {
 		    	Button studentButton = new Button("Student");
 		    	// If button is pressed, will send the user to the student page
 		    	studentButton.setOnAction(a -> {
-		    		new StudentHomePage(databaseHelper).show(primaryStage);
+		    		new StudentHomePage(databaseHelper).show(primaryStage,user);
 	            });
 		    	// Add the button to the layout
 	            layout.getChildren().add(studentButton);

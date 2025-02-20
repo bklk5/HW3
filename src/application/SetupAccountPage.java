@@ -197,7 +197,7 @@ public class SetupAccountPage {
 		            				
 		            		}
 		            		else if (studentRole) {
-		            			new StudentHomePage(databaseHelper).show(primaryStage);
+		            			new StudentHomePage(databaseHelper).show(primaryStage,user);
 		            		}
 		            		else if (instructorRole) {
 		            			new InstructorHomePage(databaseHelper).show(primaryStage);
