@@ -43,6 +43,9 @@ public class MessagesPage {
         
         
         // - - - - - - - - - - - - - - - CONTENT - - - - - - - - - - - - - - 
+        Label header = new Label("Your Feedback and Messages: ");
+	    header.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
+
     	// Set up listview to show list of question titles
     	ObservableList<Message> items = FXCollections.observableArrayList();
     	ListView<Message> listView = new ListView<>(items);
@@ -79,12 +82,6 @@ public class MessagesPage {
                 }
             }
         });
-
-        // Create Button to Navigate to Questions & Answers Page
-        Button questionButton = new Button("Ask a question");
-        questionButton.setOnAction(a -> {
-        	new CreateQuestion(databaseHelper).show(primaryStage, user);
-        });
         
         // Handle button for listview upon clicking
         listView.setOnMouseClicked(a -> {
@@ -103,7 +100,7 @@ public class MessagesPage {
         
 
         // - - - - - - - - - - - - - - - GENERAL LAYOUT FOR PAGES - - - - - - - - - - - - - - 
-        VBox centerContent = new VBox(10, new Label("Questions"), questionButton, listView);
+        VBox centerContent = new VBox(10, header, listView);
         centerContent.setStyle("-fx-padding: 20px;");
 
         BorderPane borderPane = new BorderPane();

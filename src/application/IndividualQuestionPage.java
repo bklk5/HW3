@@ -130,12 +130,13 @@ public class IndividualQuestionPage {
 
         // - - - - - - - - - - - - - - - GENERAL LAYOUT FOR PAGES - - - - - - - - - - - - - - 
         HBox buttonContainer = new HBox();
+        buttonContainer.setAlignment(javafx.geometry.Pos.TOP_RIGHT);
         
         if (user.getUserName().equals(question.getAuthor())) {
         	buttonContainer.getChildren().addAll(updateButton, deleteButton);
         }
         
-        VBox centerContent = new VBox(10, buttonContainer, authorText, questionText, contentText, answerButton, listView);
+        VBox centerContent = new VBox(10, buttonContainer, authorText, questionText, contentText, answerButton, messageButton, listView);
         centerContent.setStyle("-fx-padding: 20px;");
 
         BorderPane borderPane = new BorderPane();
