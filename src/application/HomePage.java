@@ -41,6 +41,7 @@ public class HomePage {
         
         
         // - - - - - - - - - - - - - - - CONTENT - - - - - - - - - - - - - - 
+        Label welcomeText = new Label("Welcome " + user.getUserName() + "!");
     	Button questionButton = new Button("questions page");
 	    Button inviteButton = new Button("Invite");
 	    Button oneTimePasswordButton = new Button("One Time Password");
@@ -48,6 +49,9 @@ public class HomePage {
 	    Button removeUsersButton = new Button("Remove Users");
 	    Button updateRoleButton = new Button("Update Role");
 	    Button logoutButton = new Button("Logout");
+	    
+	    // styling 
+	    welcomeText.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
 	   
 	    // Go to the invite page
         inviteButton.setOnAction(a -> {
@@ -95,7 +99,7 @@ public class HomePage {
 	    
 	    
         // - - - - - - - - - - - - - - - GENERAL LAYOUT FOR PAGES - - - - - - - - - - - - - - 
-        VBox centerContent = new VBox(10, new Label("Questions"), questionButton,inviteButton,oneTimePasswordButton,listUsersButton,removeUsersButton,updateRoleButton, logoutButton);
+        VBox centerContent = new VBox(10, welcomeText, questionButton,inviteButton,oneTimePasswordButton,listUsersButton,removeUsersButton,updateRoleButton, logoutButton);
         centerContent.setStyle("-fx-padding: 20px;");
 
         BorderPane borderPane = new BorderPane();

@@ -95,7 +95,7 @@ public class UserLoginPage {
             				
             			}
             			else if (studentRole) {
-            				new HomePage(databaseHelper).show(primaryStage,user);
+            				new HomePage(databaseHelper).show(primaryStage, user);
             			}
             			else if (instructorRole) {
             				new InstructorHomePage(databaseHelper).show(primaryStage);
