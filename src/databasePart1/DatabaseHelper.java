@@ -40,7 +40,7 @@ public class DatabaseHelper {
 			connection = DriverManager.getConnection(DB_URL, USER, PASS);
 			statement = connection.createStatement(); 
 			// You can use this command to clear the database and restart from fresh.
-//			statement.execute("DROP ALL OBJECTS");
+			//statement.execute("DROP ALL OBJECTS");
 
 			createTables();  // Create the necessary tables if they don't exist
 		} catch (ClassNotFoundException e) {
@@ -918,5 +918,25 @@ public class DatabaseHelper {
 		
 		// - - - - - - - - - - - - - - - MESSAGE METHODS END - - - - - - - - - - - - - - - - -
 
+
+		// - - - - - - - - - - - - - - - QUESTIONS LIST METHOD TO SEARCH QUESTION END  - - - - - - - - - - - - - - - - -
+
+		public List<Question> getQuestions() throws SQLException {
+		    List<Question> questions = new ArrayList<>();
+		    String sql = "SELECT * FROM Questions"; 
+		    try (PreparedStatement pstmt = connection.prepareStatement(sql);
+		         ResultSet rs = pstmt.executeQuery()) {
+		        while (rs.next()) {
+		            Question question = new Question(
+		                rs.getString("title"),
+		                rs.getString("content"),
+		                rs.getString("author"),
+		                rs.getString("category")
+		            );
+		            questions.add(question);
+		        }
+		    }
+		    return questions;
+		}
 
 }

@@ -30,12 +30,15 @@ public class Forums {
     	// Set up buttons for top nav bar 
     	Button homeButton = new Button("Home");
     	Button forumsButton = new Button("Forums");
+    	Button searchButton = new Button("Search");
     	
     	homeButton.setOnAction(a -> new HomePage(databaseHelper).show(primaryStage, user));
     	forumsButton.setOnAction(a -> new Forums(databaseHelper).show(primaryStage, user));
+    	searchButton.setOnAction(e -> new SearchQuestions(databaseHelper).show(primaryStage, user));
+    	
     	
     	// Create the Top Navigation Bar
-        ToolBar toolbar = new ToolBar(homeButton, forumsButton);
+        ToolBar toolbar = new ToolBar(homeButton, forumsButton, searchButton);
         // - - - - - - - - - - - - - - - NAV BAR - - - - - - - - - - - - - - 
     	
         
