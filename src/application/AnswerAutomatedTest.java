@@ -30,11 +30,36 @@ public class AnswerAutomatedTest {
 		/************** Call the recognizer to process the input **************/
 		String resultText = AnswerRecognizer.checkAnswer(content);
 		/************** Interpret the result and display that interpreted information **************/
-		System.out.println(resultText);
 		if (resultText != "") {
+			
+			if (expectedPass) {
+				System.out.println("***Failure*** The answer <" + content + "> is invalid." + 
+						"\nBut it was supposed to be valid, so this is a failure!\n");
+				System.out.println("Error message: " + resultText);
+				numFailed++;
+			}
+			// If the test case expected the test to fail then this is a success
+			else {			
+			System.out.println("***Success*** The answer <" + content  + "> is invalid." + 
+									"\nBut it was supposed to be invalid, so this is a pass!\n");
+			System.out.println("Error message: " + resultText);
 			numPassed++;
+						
+			}
 		} else { 
-			numFailed++;
+			// If the test case expected the test to pass then this is a success
+		if (expectedPass) {	
+			System.out.println("***Success*** The answer <" + content + "> is valid, so this is a pass!");
+					numPassed++;
+				}
+						// If the test case expected the test to fail then this is a failure
+			else {
+			System.out.println("***Failure*** The answer <" + content + 
+					"> was judged as valid" + 
+				"\nBut it was supposed to be invalid, so this is a failure!");
+							numFailed++;
+			}
+			
 		}
 		
 	}

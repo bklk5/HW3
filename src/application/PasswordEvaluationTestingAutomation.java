@@ -14,7 +14,7 @@ public class PasswordEvaluationTestingAutomation {
 	public static void main(String[] args) {
 		
 		System.out.println("______________________________________");
-		System.out.println("\nTesting Automation");
+		System.out.println("\nPassword Testing Automation");
 
 		// Test cases
 		

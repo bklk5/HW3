@@ -3,47 +3,67 @@ package application;
 import java.util.Scanner;
 
 public class EmailRecognizerTestBed {
-	static String inputLine;
-	/*******************************************************************************************************/
-
-	/*******************************************************************************************************
-	 * This method is the Console user interface
-	 * 
-	 */
+	static int numPassed = 0;	// Counter of the number of passed tests
+	static int numFailed = 0;	// Counter of the number of failed tests
+	
 	public static void main(String[] args) {
-
-		System.out.println("Welcome to the Email Recognizer Testbed\n");
-        System.out.println("Please enter a Email or an empty line to stop.");
-
-		// Associate the system keyboard with a Scanner object
-		Scanner keyboard = new Scanner(System.in);
-		// As long as there is a next line, read it in... Since the input is the keyboard, this is always true
-		while (keyboard.hasNextLine()) {
-			inputLine = keyboard.nextLine();		// Fetch the next line
-			if (inputLine.length() == 0) {			// If the length of the trimmed line is zero, stop the loop
-				System.out.println("\n*** Empty input line detected, the loop stops.");
-				keyboard.close();					// Display the reason for terminating the loop.
-				System.exit(0);
-			}
-			// Input has been provided, let's see if it is a valid date or not
- 			String errMessage = EmailRecognizer.checkForValidEmail(inputLine);
- 			
- 			// If the returned String is not empty, it is an error message
-			if (errMessage != "") {
-				// Display the error message
-				System.out.println(errMessage);
+		/************** Test cases semi-automation report header **************/
+		System.out.println("\nEmail Testing Automation");
 		
-				// Display the input line so the user can see what was entered		
-				System.out.println(inputLine);
-				// Display the line up to the error and the display an up arrow
+		/************** Start of the test cases **************/
+		performTestCase(1, "sadw@asu.edu", true);
+		performTestCase(2, "", false);
+		performTestCase(3, "adwad@", false);
+		performTestCase(4, " dWQEW@ewfe.foewfewfowefewofewofw   ", false);
+		performTestCase(5, "!0982139219-0-02=1",false);
+		performTestCase(6, "adw@asu.school",false);
+		/************** End of the test cases **************/
+		
+		/************** Test cases semi-automation report footer **************/
+		System.out.println("____________________________________________________________________________");
+		System.out.println();
+		System.out.println("Number of tests passed: "+ numPassed);
+		System.out.println("Number of tests failed: "+ numFailed);
+	}
+	
+	public static void performTestCase (int testCase, String content, boolean expectedPass) {
+		System.out.println("____________________________________________________________________________\n\nTest case: " + testCase);
+		System.out.println("Contents input: \"" + content + "\"");
+		
+		/************** Call the recognizer to process the input **************/
+		String resultText = EmailRecognizer.checkForValidEmail(content);
+		/************** Interpret the result and display that interpreted information **************/
+		if (resultText != "") {
+			
+			if (expectedPass) {
+				System.out.println("***Failure*** The email <" + content + "> is invalid." + 
+						"\nBut it was supposed to be valid, so this is a failure!\n");
+				System.out.println("Error message: " + resultText);
+				numFailed++;
 			}
+			// If the test case expected the test to fail then this is a success
+			else {			
+			System.out.println("***Success*** The email <" + content  + "> is invalid." + 
+									"\nBut it was supposed to be invalid, so this is a pass!\n");
+			System.out.println("Error message: " + resultText);
+			numPassed++;
+						
+			}
+		} else { 
+			// If the test case expected the test to pass then this is a success
+		if (expectedPass) {	
+			System.out.println("***Success*** The email <" + content + "> is valid, so this is a pass!");
+					numPassed++;
+				}
+						// If the test case expected the test to fail then this is a failure
 			else {
-				// The returned String is empty, it, so there is no error in the input.
-				System.out.println("Success! The UserName is valid.");
+			System.out.println("***Failure*** The email <" + content + 
+					"> was judged as valid" + 
+				"\nBut it was supposed to be invalid, so this is a failure!");
+							numFailed++;
 			}
-			// Request more input or an empty line to stop the application.
-	        System.out.println("\nPlease enter UserName or an empty line to stop.");
-
+			
 		}
+		
 	}
 }
