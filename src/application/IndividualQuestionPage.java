@@ -56,8 +56,23 @@ public class IndividualQuestionPage {
 		});
 		
 		deleteButton.setOnAction(a -> {
-			databaseHelper.deleteQuestion(question.getId());
-			new Forums(databaseHelper).show(primaryStage, user);
+			
+			// Add a warming that this action can not be undone
+			  Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION, 
+	    	            "Are you sure you want to delete this question?\n This action can not be undone!" , ButtonType.YES, ButtonType.NO);
+	    	        confirmationAlert.setTitle("Confirm Deletion");
+
+	    	        //check the response
+	    	        confirmationAlert.showAndWait().ifPresent(response -> {
+	    	            if (response == ButtonType.YES) {
+	    	                // Proceed with deletion if user confirms
+
+	    	    			databaseHelper.deleteQuestion(question.getId());
+	    	    			new Forums(databaseHelper).show(primaryStage, user);
+	    	                
+	    	                }
+	    	            });
+	    	
 		});
 		
 		messageButton.setOnAction(a -> {
