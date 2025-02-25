@@ -12,7 +12,7 @@ package application;
  * Must have one upper case character, A-z
  * Must have one number, 0-9
  * Must have one special character: ~`!@#$%^&*()_-+={}[]|\\:;\"'<>,.?/
- * Lastly, it must be bigger than 6 characters 
+ * Lastly, it must be bigger than 7 characters 
  * */
 
 

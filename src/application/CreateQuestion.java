@@ -43,6 +43,16 @@ public class CreateQuestion {
 
         Button setupButton = new Button("create question");
         
+        Button  backButton = new  Button("<--");
+        
+        
+        // Go back to the forum page
+        backButton.setOnAction(a ->{
+        	new Forums(databaseHelper).show(primaryStage, user);
+        });
+        
+        
+        
         // Label to display error messages
         Label errorLabel = new Label();
         errorLabel.setStyle("-fx-text-fill: red; -fx-font-size: 12px;");
@@ -76,7 +86,7 @@ public class CreateQuestion {
         // - - - - - - - - - - - - - - - CONTENT - - - - - - - - - - - - - -
 
 
-        VBox layout = new VBox(10, questionLabel, titleField, contentField, categoryField, setupButton, errorLabel);
+        VBox layout = new VBox(10, questionLabel, titleField, contentField, categoryField, setupButton, errorLabel, backButton);
         layout.setStyle("-fx-padding: 20; -fx-alignment: center;");
 
         primaryStage.setScene(new Scene(layout, 800, 400));

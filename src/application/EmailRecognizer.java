@@ -4,13 +4,13 @@ import java.util.HashSet;
 import java.util.regex.Pattern;
 
 /**
- *  The username recognizer class handle the process of verifying usernames.
- *  It make sure that username meet the following requirement:
- *  First character must be alphabetic.
- *  Only A-Z,a-z,0-9 (UNChar) characters are allowed with the exception of the following special characters:
- *  A period, minus sign and underscore.
- *  Special characters may only be used between two UNChar characters.
- *  The user name must be longer then 4 characters and shorter then 16 characters.
+ *  The email recognizer class handle the process of verifying emails.
+ *  It make sure that email meet the following requirement:
+ * 	email can not be empty
+ * 	must be between 5 and 255 characters
+ * 	must follow the following email pattern: ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$
+ *  Must include a valid domain
+ *
  * */
 
 

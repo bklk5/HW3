@@ -9,7 +9,7 @@ package application;
  *  Only A-Z,a-z,0-9 (UNChar) characters are allowed with the exception of the following special characters:
  *  A period, minus sign and underscore.
  *  Special characters may only be used between two UNChar characters.
- *  The user name must be longer then 4 characters and shorter then 16 characters.
+ *  The user name must be longer then 3 characters and shorter then 17 characters.
  * */
 
 

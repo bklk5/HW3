@@ -1,6 +1,7 @@
 package application;
 
 public class SearchRecognizer {
+	
 	public static String checkSearch(String content) {
 		
 		// check if length of email valid 

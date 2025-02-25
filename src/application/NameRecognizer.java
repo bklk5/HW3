@@ -6,7 +6,7 @@ package application;
  *  Only A-Z,a-z characters are allowed with the exception of the following special characters:
  *  A hyphen and space
  *  Special characters may only be used between two alphabetic characters.
- *  The user name must be longer then 2 characters and shorter then 50 characters.
+ *  The user's name must be longer then 2 characters and shorter then 50 characters.
  * */
 
 
