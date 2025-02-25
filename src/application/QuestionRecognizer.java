@@ -18,6 +18,10 @@ public class QuestionRecognizer {
 		if (category.length() < 3 || category.length() > 50) {
 			return "category must be between 3 and 50 characters";
 		}
+		
+		if (title.trim().isEmpty() || content.trim().isEmpty() || category.trim().isEmpty()) {
+			return "title, content, and category fields cannot contain only spaces";
+		}
         
         return "";
 	}

@@ -14,6 +14,7 @@ public class QuestionAutomatedTest {
 		performTestCase(3, "123", "what to do", "none", false);
 		performTestCase(4, "teamphase", "111", "team", false);
 		performTestCase(5, "", "111", "no", false);
+		performTestCase(6, "      ", "empty", "none",false);
 		/************** End of the test cases **************/
 		
 		/************** Test cases semi-automation report footer **************/

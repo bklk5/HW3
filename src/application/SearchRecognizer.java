@@ -13,6 +13,9 @@ public class SearchRecognizer {
 			return "content must be between 5 and 100 characters";
 		}
         
+		if (content.trim().isEmpty()) {
+			return "content cannot contain only spaces";
+		}
         return "";
 	}
 }

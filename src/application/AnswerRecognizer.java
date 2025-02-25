@@ -11,6 +11,10 @@ public class AnswerRecognizer {
 		if (content.length() < 5 || content.length() > 1500) {
 			return "content must be between 5 and 1500 characters";
 		}
+		
+		if(content.trim().isEmpty()) {
+			return "content cannot contain only spaces";
+		}
         
         return "";
 	}
