@@ -24,10 +24,21 @@ public class CreateMessage {
         contentField.setPrefHeight(100);
 
         Button setupButton = new Button("Send Message");
+        Button  backButton = new  Button("<--");
         
         // Label to display error messages
         Label errorLabel = new Label();
         errorLabel.setStyle("-fx-text-fill: red; -fx-font-size: 12px;");
+        
+        //Go back to the quesiton page
+        backButton.setOnAction(a ->{
+        	try {
+				new IndividualQuestionPage(databaseHelper).show(primaryStage, user, question);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        });
         
         setupButton.setOnAction(a -> {
         	// Retrieve user input
@@ -51,7 +62,7 @@ public class CreateMessage {
             }
         });
 
-        VBox layout = new VBox(10, messageLabel, contentField, setupButton, errorLabel);
+        VBox layout = new VBox(10, messageLabel, contentField, setupButton, errorLabel, backButton);
         layout.setStyle("-fx-padding: 20; -fx-alignment: center;");
 
         primaryStage.setScene(new Scene(layout, 800, 400));

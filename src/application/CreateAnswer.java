@@ -35,10 +35,22 @@ public class CreateAnswer {
         contentField.setPrefHeight(100);
 
         Button setupButton = new Button("create answer");
-        
+        Button  backButton = new  Button("<--");
         // Label to display error messages
         Label errorLabel = new Label();
         errorLabel.setStyle("-fx-text-fill: red; -fx-font-size: 12px;");
+        
+        
+        
+        //Go back to the question page
+        backButton.setOnAction(a ->{
+        	try {
+				new IndividualQuestionPage(databaseHelper).show(primaryStage, user, question);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        });
         
         setupButton.setOnAction(a -> {
         	// Retrieve user input
@@ -63,7 +75,7 @@ public class CreateAnswer {
             }
         });
 
-        VBox layout = new VBox(10, questionLabel, contentField, setupButton, errorLabel);
+        VBox layout = new VBox(10, questionLabel, contentField, setupButton, errorLabel,backButton);
         layout.setStyle("-fx-padding: 20; -fx-alignment: center;");
 
         primaryStage.setScene(new Scene(layout, 800, 400));
