@@ -14,6 +14,7 @@ public class AnswerAutomatedTest {
 		performTestCase(3, "work", false);
 		performTestCase(4, "     ", false);
 		performTestCase(5, "nothing", true);
+		performTestCase(6, "", false);
 		/************** End of the test cases **************/
 		
 		/************** Test cases semi-automation report footer **************/

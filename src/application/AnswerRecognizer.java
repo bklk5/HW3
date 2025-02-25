@@ -4,7 +4,7 @@ public class AnswerRecognizer {
 	public static String checkAnswer(String content) {
 		
 		// check if length of email valid 
-		if (content.length() == 0 || content.isEmpty()) {
+		if (content.isEmpty()) {
 			return "content field cannot be empty";
 		}
 		

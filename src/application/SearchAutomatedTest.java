@@ -11,7 +11,7 @@ public class SearchAutomatedTest {
 		/************** Start of the test cases **************/
 		performTestCase(1, "hello everyone", true);
 		performTestCase(2, "111", false);
-		performTestCase(3, "work", false);
+		performTestCase(3, "", false);
 		performTestCase(4, "     ", false);
 		performTestCase(5, "Computer science drives modern society, revolutionizing daily life across numerous fields. In healthcare, algorithms and AI analyze medical data, enabling early diagnoses and personalized treatments. Finance benefits from secure transactions and fraud detection through complex algorithms. Education transforms with digital platforms offering accessible, personalized learning and global collaboration. The entertainment industry leverages computer science for special effects and algorithm-driven recommendations. Social media, powered by computer science, fosters global communication and collaboration. Crucial in cybersecurity, computer science protects sensitive information and ensures data integrity. With evolving technology, the demand for skilled computer scientists grows, driving innovations like quantum computing and AI, addressing humanity's most pressing challenges. Thus, computer science is vital for progress and innovation.", false);
 		/************** End of the test cases **************/

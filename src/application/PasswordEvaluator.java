@@ -90,37 +90,31 @@ public class PasswordEvaluator {
 		// The Directed Graph simulation continues until the end of the input is reached or at some 
 		// state the current character does not match any valid transition
 		while (running) {
-			displayInputState();
+			
 			// The cascading if statement sequentially tries the current character against all of the
 			// valid transitions
 			switch (state) {
 			case 0:
 				
 				if (currentChar >= 'A' && currentChar <= 'Z') {
-					System.out.println("Upper case letter found");
 					foundUpperCase = true;
 					
 				} 	else if (currentChar >= 'a' && currentChar <= 'z') {
-					System.out.println("Lower case letter found");
 					foundLowerCase = true;
 					
 				} else if (currentChar >= '0' && currentChar <= '9') {
-					System.out.println("Digit found");
 					foundNumericDigit = true;
 					
 				} else if ("~`!@#$%^&*()_-+{}[]|:,.?/".indexOf(currentChar) >= 0) {
-					System.out.println("Special character found");
 					foundSpecialChar = true;
 					
 				} else {
 					// Invalid character, transition to state 1
-					System.out.println("Invalid character found");
 					passwordIndexofError = currentCharNdx;
 					otherChar = true;
 					nextState = 1;
 				}
 				if (currentCharNdx >= 7) {
-					System.out.println("At least 8 characters found");
 					foundLongEnough = true;
 					
 				}
@@ -133,7 +127,6 @@ public class PasswordEvaluator {
 				else
 					currentChar = input.charAt(currentCharNdx);
 			
-				System.out.println();
 				break;
 				
 			case 1:

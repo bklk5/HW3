@@ -14,7 +14,7 @@ public class EmailRecognizerTestBed {
 		performTestCase(1, "sadw@asu.edu", true);
 		performTestCase(2, "", false);
 		performTestCase(3, "adwad@", false);
-		performTestCase(4, " dWQEW@ewfe.foewfewfowefewofewofw   ", false);
+		performTestCase(4, " dWQEW@ewfe.foewfewfowefewofewofw", false);
 		performTestCase(5, "!0982139219-0-02=1",false);
 		performTestCase(6, "adw@asu.school",false);
 		/************** End of the test cases **************/

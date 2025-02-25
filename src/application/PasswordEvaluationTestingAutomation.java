@@ -62,7 +62,6 @@ public class PasswordEvaluationTestingAutomation {
 		System.out.println("____________________________________________________________________________\n\nTest case: " + testCase);
 		System.out.println("Input: \"" + inputText + "\"");
 		System.out.println("______________");
-		System.out.println("\nFinite state machine execution trace:");
 		
 		// Verifying the given password
 		String resultText= PasswordEvaluator.evaluatePassword(inputText);

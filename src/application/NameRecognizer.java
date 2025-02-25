@@ -79,7 +79,6 @@ public class NameRecognizer {
 		nameRecognizerInput = input;	// Save a copy of the input
 		running = true;						
 		nextState = -1;						// Next state unknown until the first character is checked
-		System.out.println("\nCurrent Final Input  Next  Date\nState   State Char  State  Size");
 		
 		
 		nameSize = 0;					
@@ -177,7 +176,7 @@ public class NameRecognizer {
 			}
 			
 			if (running) {
-				displayDebuggingInfo();
+				
 				// When the processing of a state is done, the FSM proceeds to the next
 				// character in the input and fetches that character and updates the currentChar.  
 				// If there is no next character the currentChar is set to a blank.
@@ -196,7 +195,6 @@ public class NameRecognizer {
 			// Should the FSM get here, the loop starts again
 	
 		}
-		displayDebuggingInfo();
 		
 		System.out.println("The loop has ended.");
 		

@@ -5,7 +5,7 @@ public class SearchRecognizer {
 	public static String checkSearch(String content) {
 		
 		// check if length of email valid 
-		if (content.length() == 0 || content.isEmpty()) {
+		if (content.isEmpty()) {
 			return "content field cannot be empty";
 		}
 		
