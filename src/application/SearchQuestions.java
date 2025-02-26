@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToolBar;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -27,11 +28,23 @@ public class SearchQuestions {
     public void show(Stage primaryStage, User user) {
         BorderPane layout = new BorderPane(); 
 
-        // TOP BAR: NAVIGATION BAR
-        Button homeButton = new Button("Home");
-        Button forumsButton = new Button("Forums"); 
-        HBox navBar = new HBox(10, homeButton, forumsButton);
-        navBar.setStyle("-fx-padding: 10px;");
+    	// - - - - - - - - - - - - - - - NAV BAR - - - - - - - - - - - - - - 
+    	// Set up buttons for top nav bar 
+    	Button homeButton = new Button("Home");
+    	Button forumsButton = new Button("Forums");
+    	Button navSearchButton = new Button("Search");
+    	Button reviewersListButton = new Button("Trusted Reviewers List");
+    	Button messagesButton = new Button("Messages");
+    	
+    	homeButton.setOnAction(a -> new HomePage(databaseHelper).show(primaryStage, user));
+    	forumsButton.setOnAction(a -> new Forums(databaseHelper).show(primaryStage, user));
+    	navSearchButton.setOnAction(e -> new SearchQuestions(databaseHelper).show(primaryStage, user));
+    	// set on action with reviewersListButton
+    	messagesButton.setOnAction(a -> new MessagesPage(databaseHelper).show(primaryStage,user));
+    	
+    	// Create the Top Navigation Bar
+        ToolBar toolbar = new ToolBar(homeButton, forumsButton, reviewersListButton,messagesButton, navSearchButton);
+        // - - - - - - - - - - - - - - - NAV BAR - - - - - - - - - - - - - - 
 
        //SEARCH BAR
         searchField.setPromptText("Enter keywords to search...");
@@ -75,7 +88,7 @@ public class SearchQuestions {
         forumsButton.setOnAction(e -> new Forums(databaseHelper).show(primaryStage, user));
         searchButton.setOnAction(e -> performSearch());
         
-        layout.setTop(navBar);
+        layout.setTop(toolbar);
         layout.setCenter(questionBox);
         layout.setBottom(searchBar);
 
