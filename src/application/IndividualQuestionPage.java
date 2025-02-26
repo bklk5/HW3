@@ -33,12 +33,18 @@ public class IndividualQuestionPage {
     	// Set up buttons for top nav bar 
     	Button homeButton = new Button("Home");
     	Button forumsButton = new Button("Forums");
+    	Button searchButton = new Button("Search");
+    	Button reviewersListButton = new Button("Trusted Reviewers List");
+    	Button messagesButton = new Button("Messages");
     	
     	homeButton.setOnAction(a -> new HomePage(databaseHelper).show(primaryStage, user));
     	forumsButton.setOnAction(a -> new Forums(databaseHelper).show(primaryStage, user));
+    	searchButton.setOnAction(e -> new SearchQuestions(databaseHelper).show(primaryStage, user));
+    	// set on action with reviewersListButton
+    	messagesButton.setOnAction(a -> new MessagesPage(databaseHelper).show(primaryStage,user));
     	
     	// Create the Top Navigation Bar
-        ToolBar toolbar = new ToolBar(homeButton, forumsButton);
+        ToolBar toolbar = new ToolBar(homeButton, forumsButton, reviewersListButton,messagesButton, searchButton);
         // - - - - - - - - - - - - - - - NAV BAR - - - - - - - - - - - - - - 
         
 
