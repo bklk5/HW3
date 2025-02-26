@@ -44,8 +44,8 @@ public class Answer {
 		this.content = content;
 	}
 	
-	public void setUpvotes() {
-		this.upvotes++;
+	public void setUpvotes(int upvotes) {
+		this.upvotes = upvotes;
 	}
 	
 	public void setId(int id) {

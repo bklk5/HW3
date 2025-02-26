@@ -697,7 +697,7 @@ public class DatabaseHelper {
 	    }
 
 	    return questions;
-	}
+	} 
 	
 	public void printQuestions() throws SQLException {
 		String query = "SELECT * FROM Questions";
@@ -837,6 +837,34 @@ public class DatabaseHelper {
 		    }
 			
 		}
+		// upvote incrementation
+		public void incrementUpvote(int answerId){
+			String query = "UPDATE Answers SET upvotes=upvotes+1 WHERE id = ? ";
+			
+			try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+		        pstmt.setInt(1, answerId);
+		        pstmt.executeUpdate(); // Execute update
+		    } catch (SQLException e) {
+		        System.err.println("SQL Error during update: " + e.getMessage());
+		        e.printStackTrace();
+		    }
+		}
+		public int getUpvote(int answerId){
+			String query = "SELECT upvotes FROM Answers WHERE id =?";
+			try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+		        pstmt.setInt(1, answerId);
+		        ResultSet rs = pstmt.executeQuery();
+		        if(rs.next()) {
+		        	return rs.getInt("upvotes");   
+		        	}   
+		        return 0; 
+		    } catch (SQLException e) {
+		        System.err.println("SQL Error during update: " + e.getMessage());
+		        e.printStackTrace();
+		        return 0;
+		    }
+		}
+		
 		
 		// - - - - - - - - - - - - - - - ANSWER METHODS END - - - - - - - - - - - - - - - - -
 		

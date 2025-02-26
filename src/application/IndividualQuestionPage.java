@@ -2,6 +2,7 @@ package application;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -115,14 +116,29 @@ public class IndividualQuestionPage {
             @Override
             protected void updateItem(Answer a, boolean empty) {
                 super.updateItem(a, empty);
+                
+        		ToggleButton upvoteButton = new ToggleButton("⇧"); 
+        		Label voteCount = new Label(); 
+        		
+        		VBox voteBox = new VBox(10, upvoteButton, voteCount); 
+        		
+                upvoteButton.setOnAction(b -> {
+        			databaseHelper.incrementUpvote(a.getId());
+        			int votes = databaseHelper.getUpvote(a.getId());
+        			a.setUpvotes(votes+1);
+        			voteCount.setText(String.valueOf(a.getUpvotes()));
+        		});
+                
                 if (empty || a == null) {
                     setText(null);
                 } else {
                     setText("Answer: " + a.getContent());
+                    HBox voteSpacing = new HBox(10, voteBox);
+                    setGraphic(voteSpacing);
+                    
                 }
             }
         });
-
     	
     	// Handle button for listview upon clicking on individual list element 
         listView.setOnMouseClicked(a -> {
