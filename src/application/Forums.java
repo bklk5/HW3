@@ -71,7 +71,7 @@ public class Forums {
             System.out.println(e.getMessage());
         }
         
-     // Set custom cell factory to display questions in a readable way
+        // Set custom cell factory to display questions in a readable way
         listView.setCellFactory(param -> new javafx.scene.control.ListCell<Question>() {
             @Override
             protected void updateItem(Question q, boolean empty) {

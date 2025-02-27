@@ -4,6 +4,7 @@ import databasePart1.DatabaseHelper;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -33,21 +34,25 @@ public class HomePage {
     	Button reviewersListButton = new Button("Trusted Reviewers List");
     	Button messagesButton = new Button("Messages");
     	
+    	
+    	Button logout = new Button("Logout");
+    	HBox rightContainer = new HBox(logout);
+    	rightContainer.setPrefWidth(380);
+    	
     	homeButton.setOnAction(a -> new HomePage(databaseHelper).show(primaryStage, user));
     	forumsButton.setOnAction(a -> new Forums(databaseHelper).show(primaryStage, user));
     	searchButton.setOnAction(e -> new SearchQuestions(databaseHelper).show(primaryStage, user));
     	// set on action with reviewersListButton
     	messagesButton.setOnAction(a -> new MessagesPage(databaseHelper).show(primaryStage,user));
+    	rightContainer.setAlignment(javafx.geometry.Pos.TOP_RIGHT);
     	
     	// Create the Top Navigation Bar
-        ToolBar toolbar = new ToolBar(homeButton, forumsButton, reviewersListButton,messagesButton, searchButton);
+        ToolBar toolbar = new ToolBar(homeButton, forumsButton, reviewersListButton,messagesButton, searchButton,rightContainer);
         // - - - - - - - - - - - - - - - NAV BAR - - - - - - - - - - - - - - 
         
         
         // - - - - - - - - - - - - - - - CONTENT - - - - - - - - - - - - - - 
         Label welcomeText = new Label("Welcome " + user.getUserName() + "!");
-    	Button questionButton = new Button("questions page");
-    	Button reviewersButton = new Button("Reviewers Page");
 	    Button inviteButton = new Button("Invite");
 	    Button oneTimePasswordButton = new Button("One Time Password");
 	    Button listUsersButton = new Button("List Users");
@@ -90,13 +95,16 @@ public class HomePage {
         	System.out.println("logging out...");
         	new SetupLoginSelectionPage(databaseHelper).show(primaryStage);
         });
+
     	
-    	questionButton.setOnAction(a -> {
-            new Forums(databaseHelper).show(primaryStage, user);
-    	});
+    	if (user.isAdmin()) {
+    		System.out.println("USER IS ADMIN");
+    	}
+    	else {
+    		System.out.println("USER IS NOT ADMIN");
+    	}
     	
     	// set on action with reviewersButton
-    	
     	VBox layout = new VBox();
     	
 	    layout.setStyle("-fx-alignment: center; -fx-padding: 20;");
@@ -108,8 +116,15 @@ public class HomePage {
 	    
 	    
 	    
-        // - - - - - - - - - - - - - - - GENERAL LAYOUT FOR PAGES - - - - - - - - - - - - - - 
-        VBox centerContent = new VBox(10, welcomeText, questionButton,reviewersButton,inviteButton,oneTimePasswordButton,listUsersButton,removeUsersButton,updateRoleButton, logoutButton);
+        // - - - - - - - - - - - - - - - GENERAL LAYOUT FOR PAGES - - - - - - - - - - - - - -
+        VBox centerContent = new VBox(10, welcomeText, logoutButton);
+        
+        // conditionally render options for user depending on their role
+        if (user.isAdmin()) {
+        	centerContent.getChildren().addAll(inviteButton,oneTimePasswordButton,listUsersButton,removeUsersButton,updateRoleButton);
+        }
+        
+        
         centerContent.setStyle("-fx-padding: 20px;");
 
         BorderPane borderPane = new BorderPane();
