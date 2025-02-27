@@ -1,5 +1,9 @@
 Here is where the screencasts as well as the team meetings can be found:
 
+GUI screencast: 
+https://asu.zoom.us/rec/share/pmFTv3IMR0l4idqDhB2_AGgVi5Xtr9oSBL2aD5FobAWaOvOi_ZTuOEsVdwFCD6Vq.FlIxrDqEvF135l9E
+Passcode: FA#C2%LP
+
 Technical screencast:
 https://asu.zoom.us/rec/share/JAGpr1x7G3BXU194u0hwCiZVo9BSbz0nmxi50o2LWrxMDU6ujOrb9txBl5oglJzV.mdRqdEzDr49fXo_H?startTime=1740626042000
 Code secret: ?BT&Zx4V
