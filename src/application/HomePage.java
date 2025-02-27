@@ -55,6 +55,8 @@ public class HomePage {
 	    Button updateRoleButton = new Button("Update Role");
 	    Button logoutButton = new Button("Logout");
 	    
+	   
+	    
 	    // styling 
 	    welcomeText.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
 	   

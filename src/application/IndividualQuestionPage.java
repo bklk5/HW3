@@ -135,9 +135,12 @@ public class IndividualQuestionPage {
         			voteCount.setText(String.valueOf(a.getUpvotes()));
         		});
                 
+                
+                
                 if (empty || a == null) {
                     setText(null);
                 } else {
+                	voteCount.setText(String.valueOf(databaseHelper.getUpvote(a.getId())));
                     setText("Answer: " + a.getContent());
                     HBox voteSpacing = new HBox(10, voteBox);
                     setGraphic(voteSpacing);

@@ -42,6 +42,7 @@ public class SearchQuestions {
     	// set on action with reviewersListButton
     	messagesButton.setOnAction(a -> new MessagesPage(databaseHelper).show(primaryStage,user));
     	
+    	
     	// Create the Top Navigation Bar
         ToolBar toolbar = new ToolBar(homeButton, forumsButton, reviewersListButton,messagesButton, navSearchButton);
         // - - - - - - - - - - - - - - - NAV BAR - - - - - - - - - - - - - - 
@@ -98,8 +99,10 @@ public class SearchQuestions {
         primaryStage.show();
     }
     	//SEARCH FUNCTION 
-    private void performSearch() { 
+    private void performSearch() {
+    	
         String searchText = searchField.getText().trim().toLowerCase();
+        
         questionsListView.getItems().clear();
         try {
             List<Question> questions = databaseHelper.getQuestions(); //FETCHES AND LISTS ALL THE QUESTIONS
@@ -112,5 +115,8 @@ public class SearchQuestions {
             e.printStackTrace();
             questionsListView.getItems().add(new Question("Error loading questions", "", searchText, searchText)); //ERROR SYSTEM
         }
+        
+        
+        
     }
 }
