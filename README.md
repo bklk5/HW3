@@ -1,8 +1,11 @@
 Here is where the screencasts as well as the team meetings can be found:
 
 Technical screencast:
+https://asu.zoom.us/rec/share/JAGpr1x7G3BXU194u0hwCiZVo9BSbz0nmxi50o2LWrxMDU6ujOrb9txBl5oglJzV.mdRqdEzDr49fXo_H?startTime=1740626042000
+Code secret: ?BT&Zx4V
 
 Potential users, execution of application: 
+
 
 Team meetings:
 
@@ -27,3 +30,6 @@ https://asu.zoom.us/rec/share/iiwnyQ3mrfPCeS3EPdEszGgp2WvAdpjeRYEQui-e1B6FOdBWAc
 Passcode: e7D4S$AX
 
 Date: 2/26/25
+https://asu.zoom.us/rec/share/JAGpr1x7G3BXU194u0hwCiZVo9BSbz0nmxi50o2LWrxMDU6ujOrb9txBl5oglJzV.mdRqdEzDr49fXo_H?startTime=1740627950000
+Code secret: ?BT&Zx4V
+
