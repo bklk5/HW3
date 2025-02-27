@@ -141,6 +141,15 @@ public class IndividualQuestionPage {
         			int votes = databaseHelper.getUpvote(a.getId());
         			a.setUpvotes(votes+1);
         			voteCount.setText(String.valueOf(a.getUpvotes()));
+        			//update the gui to reflect the new changes 
+        			try {
+						items.setAll(databaseHelper.readAnswersByQuestionId(question.getId()));
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+        			
+        			
         		});
                 
                 
