@@ -33,18 +33,20 @@ public class HomePage {
     	Button searchButton = new Button("Search");
     	Button reviewersListButton = new Button("Trusted Reviewers List");
     	Button messagesButton = new Button("Messages");
+    	Button logoutButton = new Button("Logout");
     	
-    	
-    	Button logout = new Button("Logout");
-    	HBox rightContainer = new HBox(logout);
+    	// container to right align logout button
+    	HBox rightContainer = new HBox(logoutButton);
     	rightContainer.setPrefWidth(380);
+    	rightContainer.setAlignment(javafx.geometry.Pos.TOP_RIGHT);
     	
     	homeButton.setOnAction(a -> new HomePage(databaseHelper).show(primaryStage, user));
     	forumsButton.setOnAction(a -> new Forums(databaseHelper).show(primaryStage, user));
     	searchButton.setOnAction(e -> new SearchQuestions(databaseHelper).show(primaryStage, user));
     	// set on action with reviewersListButton
     	messagesButton.setOnAction(a -> new MessagesPage(databaseHelper).show(primaryStage,user));
-    	rightContainer.setAlignment(javafx.geometry.Pos.TOP_RIGHT);
+        logoutButton.setOnAction(a -> new SetupLoginSelectionPage(databaseHelper).show(primaryStage));
+
     	
     	// Create the Top Navigation Bar
         ToolBar toolbar = new ToolBar(homeButton, forumsButton, reviewersListButton,messagesButton, searchButton,rightContainer);
@@ -58,9 +60,6 @@ public class HomePage {
 	    Button listUsersButton = new Button("List Users");
 	    Button removeUsersButton = new Button("Remove Users");
 	    Button updateRoleButton = new Button("Update Role");
-	    Button logoutButton = new Button("Logout");
-	    
-	   
 	    
 	    // styling 
 	    welcomeText.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
@@ -91,10 +90,7 @@ public class HomePage {
         	new UpdateRolesPage().show(databaseHelper, primaryStage);
         });
         // Logout user
-        logoutButton.setOnAction(a -> {
-        	System.out.println("logging out...");
-        	new SetupLoginSelectionPage(databaseHelper).show(primaryStage);
-        });
+
 
     	
     	if (user.isAdmin()) {
@@ -117,7 +113,7 @@ public class HomePage {
 	    
 	    
         // - - - - - - - - - - - - - - - GENERAL LAYOUT FOR PAGES - - - - - - - - - - - - - -
-        VBox centerContent = new VBox(10, welcomeText, logoutButton);
+        VBox centerContent = new VBox(10, welcomeText);
         
         // conditionally render options for user depending on their role
         if (user.isAdmin()) {

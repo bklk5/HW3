@@ -32,19 +32,26 @@ public class SearchQuestions {
     	// Set up buttons for top nav bar 
     	Button homeButton = new Button("Home");
     	Button forumsButton = new Button("Forums");
-    	Button navSearchButton = new Button("Search");
+    	Button navSearch = new Button("Search");
     	Button reviewersListButton = new Button("Trusted Reviewers List");
     	Button messagesButton = new Button("Messages");
+    	Button logoutButton = new Button("Logout");
+    	
+    	// container to right align logout button
+    	HBox rightContainer = new HBox(logoutButton);
+    	rightContainer.setPrefWidth(380);
+    	rightContainer.setAlignment(javafx.geometry.Pos.TOP_RIGHT);
     	
     	homeButton.setOnAction(a -> new HomePage(databaseHelper).show(primaryStage, user));
     	forumsButton.setOnAction(a -> new Forums(databaseHelper).show(primaryStage, user));
-    	navSearchButton.setOnAction(e -> new SearchQuestions(databaseHelper).show(primaryStage, user));
+    	navSearch.setOnAction(e -> new SearchQuestions(databaseHelper).show(primaryStage, user));
     	// set on action with reviewersListButton
     	messagesButton.setOnAction(a -> new MessagesPage(databaseHelper).show(primaryStage,user));
-    	
+        logoutButton.setOnAction(a -> new SetupLoginSelectionPage(databaseHelper).show(primaryStage));
+
     	
     	// Create the Top Navigation Bar
-        ToolBar toolbar = new ToolBar(homeButton, forumsButton, reviewersListButton,messagesButton, navSearchButton);
+        ToolBar toolbar = new ToolBar(homeButton, forumsButton, reviewersListButton,messagesButton, navSearch,rightContainer);
         // - - - - - - - - - - - - - - - NAV BAR - - - - - - - - - - - - - - 
 
        //SEARCH BAR
