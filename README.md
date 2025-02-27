@@ -6,6 +6,9 @@ Code secret: ?BT&Zx4V
 
 Potential users, execution of application: 
 
+Evidence that the Individual Phase 2 that was used for the Team Phase 2 was tested:
+https://asu.zoom.us/rec/share/nm6gkH-1QzJMPRpGhKXBNvzfuGTv4t7-Exww8DhK6ibc8-5Gd1QGfxoQkCIlxk78.AtxU36o4UPsObfyE?startTime=1740371564000
+Passcode: wduL0#VL
 
 Team meetings:
 
