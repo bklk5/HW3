@@ -1,8 +1,23 @@
 package application;
 
+/**
+ * Automated test class for validating answers.
+ * It performs multiple test cases and reports the results.
+ * 
+ * @author Ngoc Minh Thu Le
+ * @version 2.0
+ */
+
 public class AnswerAutomatedTest {
-	static int numPassed = 0;	// Counter of the number of passed tests
-	static int numFailed = 0;	// Counter of the number of failed tests
+	/** Counts of the number of passed testcases*/
+	static int numPassed = 0;	
+	/** Counts of the number of failed  testcases*/
+	static int numFailed = 0;	
+	
+	/*
+	 * This mainline displays a header to the console, performs a sequence of
+	 * test cases, and then displays a footer with a summary of the results
+	 */
 	
 	public static void main(String[] args) {
 		/************** Test cases semi-automation report header **************/
@@ -23,6 +38,17 @@ public class AnswerAutomatedTest {
 		System.out.println("Number of tests passed: "+ numPassed);
 		System.out.println("Number of tests failed: "+ numFailed);
 	}
+	
+	/**
+	 * This method sets up the input value for the test from the input parameters,
+	 * displays test execution information, invokes precisely the same recognizer
+	 * that the interactive JavaFX mainline uses, interprets the returned value,
+	 * and displays the interpreted result.
+	 *
+	 * @param testCase The test case's number on the list.
+	 * @param content The input content to be checked.
+	 * @param expectedPass The expected outcome (true if valid, false if invalid).
+	 */
 	
 	public static void performTestCase (int testCase, String content, boolean expectedPass) {
 		System.out.println("____________________________________________________________________________\n\nTest case: " + testCase);
