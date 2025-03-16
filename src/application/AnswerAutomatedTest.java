@@ -1,11 +1,12 @@
 package application;
 
 /**
- * Automated test class for validating answers.
- * It performs multiple test cases and reports the results.
+ * Enhanced automated test class for validating answers.
+ * It performs multiple test cases, logs the results, and generates a detailed report.
+ * The additional output includes the Percentage of passed cases.
  * 
  * @author Ngoc Minh Thu Le
- * @version 2.0
+ * @version 3.0
  */
 
 public class AnswerAutomatedTest {
@@ -30,6 +31,9 @@ public class AnswerAutomatedTest {
 		performTestCase(4, "     ", false);
 		performTestCase(5, "nothing", true);
 		performTestCase(6, "", false);
+		performTestCase(8, "password123!", true);
+		performTestCase(9, null, false);
+		
 		/************** End of the test cases **************/
 		
 		/************** Test cases semi-automation report footer **************/
@@ -37,6 +41,7 @@ public class AnswerAutomatedTest {
 		System.out.println();
 		System.out.println("Number of tests passed: "+ numPassed);
 		System.out.println("Number of tests failed: "+ numFailed);
+		System.out.println("Percentage of passed cases: " + numPassed / (numPassed + numFailed) * 100 + "%");
 	}
 	
 	/**

@@ -10,55 +10,55 @@
  */
 :root {
     /* body, block and code fonts */
-    --body-font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
-    --block-font-family: 'DejaVu Serif', Georgia, "Times New Roman", Times, serif;
-    --code-font-family: 'DejaVu Sans Mono', monospace;
+    body-font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
+    block-font-family: 'DejaVu Serif', Georgia, "Times New Roman", Times, serif;
+    code-font-family: 'DejaVu Sans Mono', monospace;
     /* Base font sizes for body and code elements */
-    --body-font-size: 14px;
-    --code-font-size: 14px;
+    body-font-size: 14px;
+    code-font-size: 14px;
     /* Text colors for body and block elements */
-    --body-text-color: #353833;
-    --block-text-color: #474747;
+    body-text-color: #353833;
+    block-text-color: #474747;
     /* Background colors for various structural elements */
-    --body-background-color: #ffffff;
-    --section-background-color: #f8f8f8;
-    --detail-background-color: #ffffff;
+    body-background-color: #ffffff;
+    section-background-color: #f8f8f8;
+    detail-background-color: #ffffff;
     /* Colors for navigation bar and table captions */
-    --navbar-background-color: #4D7A97;
-    --navbar-text-color: #ffffff;
+    navbar-background-color: #4D7A97;
+    navbar-text-color: #ffffff;
     /* Background color for subnavigation and various headers */
-    --subnav-background-color: #dee3e9;
+    subnav-background-color: #dee3e9;
     /* Background and text colors for selected tabs and navigation items */
-    --selected-background-color: #f8981d;
-    --selected-text-color: #253441;
-    --selected-link-color: #1f389c;
+    selected-background-color: #f8981d;
+    selected-text-color: #253441;
+    selected-link-color: #1f389c;
     /* Background colors for generated tables */
-    --even-row-color: #ffffff;
-    --odd-row-color: #eeeeef;
+    even-row-color: #ffffff;
+    odd-row-color: #eeeeef;
     /* Text color for page title */
-    --title-color: #2c4557;
+    title-color: #2c4557;
     /* Text colors for links */
-    --link-color: #4A6782;
-    --link-color-active: #bb7a2a;
+    link-color: #4A6782;
+    link-color-active: #bb7a2a;
     /* Snippet colors */
-    --snippet-background-color: #ebecee;
-    --snippet-text-color: var(--block-text-color);
-    --snippet-highlight-color: #f7c590;
+    snippet-background-color: #ebecee;
+    snippet-text-color: var(block-text-color);
+    snippet-highlight-color: #f7c590;
     /* Border colors for structural elements and user defined tables */
-    --border-color: #ededed;
-    --table-border-color: #000000;
+    border-color: #ededed;
+    table-border-color: #000000;
     /* Search input colors */
-    --search-input-background-color: #ffffff;
-    --search-input-text-color: #000000;
-    --search-input-placeholder-color: #909090;
+    search-input-background-color: #ffffff;
+    search-input-text-color: #000000;
+    search-input-placeholder-color: #909090;
     /* Highlight color for active search tag target */
-    --search-tag-highlight-color: #ffff00;
+    search-tag-highlight-color: #ffff00;
     /* Adjustments for icon and active background colors of copy-to-clipboard buttons */
-    --copy-icon-brightness: 100%;
-    --copy-button-background-color-active: rgba(168, 168, 176, 0.3);
+    copy-icon-brightness: 100%;
+    copy-button-background-color-active: rgba(168, 168, 176, 0.3);
     /* Colors for invalid tag notifications */
-    --invalid-tag-background-color: #ffe6e6;
-    --invalid-tag-text-color: #000000;
+    invalid-tag-background-color: #ffe6e6;
+    invalid-tag-text-color: #000000;
 }
 /*
  * Styles for individual HTML elements.
@@ -67,10 +67,10 @@
  * HTML element throughout the page.
  */
 body {
-    background-color:var(--body-background-color);
-    color:var(--body-text-color);
-    font-family:var(--body-font-family);
-    font-size:var(--body-font-size);
+    background-color:var(body-background-color);
+    color:var(body-text-color);
+    font-family:var(body-font-family);
+    font-size:var(body-font-size);
     margin:0;
     padding:0;
     height:100%;
@@ -86,14 +86,14 @@ iframe {
 }
 a:link, a:visited {
     text-decoration:none;
-    color:var(--link-color);
+    color:var(link-color);
 }
 a[href]:hover, a[href]:focus {
     text-decoration:none;
-    color:var(--link-color-active);
+    color:var(link-color-active);
 }
 pre {
-    font-family:var(--code-font-family);
+    font-family:var(code-font-family);
     font-size:1em;
 }
 h1 {
@@ -122,11 +122,11 @@ ul {
     list-style-type:disc;
 }
 code, tt {
-    font-family:var(--code-font-family);
+    font-family:var(code-font-family);
 }
-:not(h1, h2, h3, h4, h5, h6) > code,
-:not(h1, h2, h3, h4, h5, h6) > tt {
-    font-size:var(--code-font-size);
+not(h1, h2, h3, h4, h5, h6) > code,
+not(h1, h2, h3, h4, h5, h6) > tt {
+    font-size:var(code-font-size);
     padding-top:4px;
     margin-top:8px;
     line-height:1.4em;
@@ -557,7 +557,7 @@ div.checkboxes > label > input {
     margin-bottom:-3px;
 }
 .table-header[onclick].sort-asc::after {
-    background-image:url('data:image/svg+xml; utf8, \
+    background-image:url('data:image/svg+xml; utf8, 
     <svg xmlns="http://www.w3.org/2000/svg" width="125" height="170"> \
     <path d="M10.101 57.059L63.019 4.142l52.917 52.917" style="opacity:.75;"/> \
     <path d="M10.101 86.392l52.917 52.917 52.917-52.917" style="opacity:.35;"/></svg>');
